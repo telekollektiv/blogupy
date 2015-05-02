@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block head %}
+{% endblock %}
+{% block content %}
+<div class="content">
+    <h2>Contribute</h2>
+    <p>Submit your Ideas</p>
+
+    {% if success %}
+        <h3>Danke für Deinen Beitrag!</h3>
+        <p>Dein Beitrag wird jetzt von der Redaktion geprüft und wenn alles in Ordnung ist veröffentlicht.</p>
+    {% else %}
+
+
+        {% for message in form.title.errors %}
+            <div class="flash">{{ message }}</div>
+        {% endfor %}
+
+        {% for message in form.article.errors %}
+            <div class="flash">{{ message }}</div>
+        {% endfor %}
+
+        <form action="{{ url_for('contribute') }}" method=post>
+            {{ form.hidden_tag() }}
+
+            {{ form.author.label }}
+            {{ form.author }}
+        {% for message in form.author.errors %}
+            <div class="flash">{{ message }}</div>
+        {% endfor %}
+
+            {{ form.title.label }}
+            {{ form.title }}
+
+            {{ form.article.label }}
+            {{ form.article }}
+
+            {{ form.submit }}
+        </form>
+    {% endif %}
+</div>
+{% endblock %}
+
+

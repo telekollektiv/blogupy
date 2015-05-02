@@ -1,0 +1,15 @@
+Flask
+Flask-FlatPages
+Frozen-Flask
+Jinja2
+Markdown
+MarkupSafe
+PyYAML
+Pygments
+Werkzeug
+itsdangerous
+wsgiref
+Flask-WTF
+Flask-Mail
+flask-paginate
+flask-pagedown

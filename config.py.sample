@@ -1,0 +1,9 @@
+# Contact form
+MAIL_SERVER = "your.mail.server"
+MAIL_PORT = 587
+MAIL_USE_TLS = True
+MAIL_USERNAME = 'support@example.net'
+MAIL_PASSWORD = 'SECRET PASSWORD'
+
+# Blog form
+ADMIN_PASSWORD = 'SECRET PASSWORD'

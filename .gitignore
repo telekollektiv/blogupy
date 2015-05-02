@@ -1,0 +1,9 @@
+*.swp
+*.py[oc]
+/bin/
+/lib/
+/local/
+/config.py
+/content/
+/bower_components/
+/include/

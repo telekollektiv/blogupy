@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>atopie</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+        <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}">
+        {% block head %}
+        {% endblock %}
+    </head>
+    <body>
+        <div class="container row">
+            <div class="col-xs-8">
+                <header>
+                    <h1 class="first-red">
+                        <a href="/">Atopie</a>
+                    </h1>
+                    <nav>
+                        <ul class="list-inline">
+                            <li><a href="{{ url_for('posts') }}">Blog</a></li>
+                            <li><a href="{{ url_for('projekt') }}">Über Atopie</a></li>
+                            <li><a href="{{ url_for('kontakt') }}">Kontakt</a></li>
+                        </ul>
+                    </nav>
+                </header>
+            </div>
+
+            <div class="col-xs-4 sidebar-nav">
+                <p>ohai</p>
+            </div>
+
+            <div>
+                <main class="col-xs-8">
+                    {% block content %}
+                    {% endblock %}
+                </main>
+
+                <div class="col-xs-4 sidebar">
+                    {% include 'sidebar.html' %}
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="footer_txt">
+                <ul class="text-right list-inline">
+                </ul>
+            </div>
+        </footer>
+    </body>
+</html>
