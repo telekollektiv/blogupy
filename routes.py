@@ -27,7 +27,7 @@ def posts():
     postdir = app.config['POST_DIR']
     posts = [p for p in flatpages if p.path.startswith(postdir)]
     posts.sort(key=lambda item: item['date'], reverse=False)
-    return render_template('article.html', posts=posts)
+    return render_template('index.html', posts=posts)
 
 
 @app.route('/projekt')
@@ -39,9 +39,7 @@ def projekt():
 def post(name):
     postdir = app.config['POST_DIR']
     path = '{}/{}'.format(postdir, name)
-    #post = flatpages.get_or_404(path)
-    with open(path) as f:
-        post = yaml.load(f)
+    post = flatpages.get_or_404(path)
     return render_template('post.html', post=post)
 
 

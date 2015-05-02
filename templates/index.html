@@ -3,7 +3,7 @@
 {% for post in posts %}
 <article>
     <div class="art-list">
-        <a href="{{ post.title }}">
+        <a href="{{ post.path[5:] }}.html">
         <h1>{{ post.title }}</h1>
         </a>
         <small>
