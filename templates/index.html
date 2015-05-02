@@ -4,15 +4,12 @@
 <article>
     <div class="art-list">
         <a href="{{ post.path[5:] }}.html">
-        <h1>{{ post.title }}</h1>
+            <h1>{{ post.title }}</h1>
         </a>
-        <small>
-            {{ post.date }}
-        </small>
 
-        <div>
-            {{ post.html|safe }}
-        </div>
+        <small>{{ post.date }}</small>
+
+        {{ post.html|safe }}
     </div>
 </article>
 {% endfor %}

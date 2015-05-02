@@ -1,8 +1,10 @@
 {% extends "layout.html" %}
 {% block content %}
 <article>
-<p class="art-date">{{ post.date }}</p>
-<h1>{{ post.title }}</h1>
-{{ post.html|safe }}
+    <h1>{{ post.title }}</h1>
+
+    <small>{{ post.date }}</small>
+
+    {{ post.html|safe }}
 </article>
 {% endblock %}
