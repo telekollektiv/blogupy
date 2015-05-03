@@ -63,9 +63,16 @@ header h1 a:hover {
 }
 
 nav {
-    border-top: 4px solid #c10800;
     background-color: #280211;
     font-size: 20px;
+}
+
+header nav {
+    border-top: 4px solid #c10800;
+}
+
+footer nav {
+    border-bottom: 4px solid #c10800;
 }
 
 nav ul {
@@ -162,16 +169,4 @@ form input#submit:hover{
   background-color: #6B0F1A;
   padding: 10px;
   width: 400px;
-}
-
-footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
-
-footer hr {
-    border: 1px solid #280211;
-    width: 100%;
-    margin-bottom: 5px;
 }
