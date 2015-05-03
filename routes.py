@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 from flask import Flask, render_template, request, flash, redirect
 from flask_flatpages import FlatPages
-#from flask_frozen import Freezer
 from flask.ext.mail import Message, Mail
-#from flask.ext.pagedown import PageDown
 from forms import ContactForm, ContributeForm
 from datetime import datetime
 from ghettodown import ghettodown
@@ -15,10 +13,9 @@ mail = Mail()
 
 app = Flask(__name__)
 flatpages = FlatPages(app)
-#freezer = Freezer(app)
-#pagedown = PageDown(app)
 
 app.config.from_object('config')
+app.config['FLATPAGES_HTML_RENDERER'] = ghettodown
 app.secret_key = 'development key'
 mail.init_app(app)
 
@@ -48,7 +45,6 @@ def post(name):
 def contribute():
     form = ContributeForm()
     if request.method == 'POST':
-        # print (type(form.title.data))
         if not form.validate():
             return render_template('contribute.html', form=form)
         else:
@@ -67,7 +63,6 @@ def contribute():
             # TODO: send email with unlock code=id
 
             return redirect('/contribute/done')
-            # return ghettodown(form.article.data)
     else:
         return render_template('contribute.html', form=form)
 
@@ -112,12 +107,4 @@ def kontakt_done():
 
 
 if __name__ == "__main__":
-    '''
-    if len(sys.argv) > 1 and sys.argv[1] == "build":
-        freezer.freeze()
-    else:
-        app.run(debug=True)
-    '''
-
-    app.config['FLATPAGES_HTML_RENDERER'] = ghettodown
     app.run(debug=True)
