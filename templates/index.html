@@ -3,12 +3,12 @@
 {% for post in posts %}
 <article>
     <div class="art-list">
-        <small class="pull-right">{{ post.date }}</small>
-        <small>{{ post.author }}</small>
-
         <a href="{{ post.path[5:] }}.html">
             <h1>{{ post.title }}</h1>
         </a>
+
+        <small class="pull-right">Vom: {{ post.date }}</small>
+        <small>Von: {{ post.author }}</small>
 
         {{ post.html|safe }}
     </div>
