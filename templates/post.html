@@ -1,9 +1,10 @@
 {% extends "layout.html" %}
 {% block content %}
 <article>
-    <h1>{{ post.title }}</h1>
+    <small class="pull-right">{{ post.date }}</small>
+    <small>{{ post.author }}</small>
 
-    <small>{{ post.date }}</small>
+    <h1>{{ post.title }}</h1>
 
     {{ post.html|safe }}
 </article>
