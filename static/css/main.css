@@ -46,6 +46,7 @@ header h1 {
     font-size: 100px;
     background: url('/static/img/header.jpg');
     background-size: 100%;
+    background-position: 0px -40px;
     margin: 0;
     padding: 10px;
     letter-spacing: 5px;
