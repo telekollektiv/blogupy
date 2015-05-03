@@ -5,9 +5,9 @@ from flask.ext.mail import Message, Mail
 from forms import ContactForm, ContributeForm
 from datetime import datetime
 from ghettodown import ghettodown
-from uuid import uuid4 as uuid
 import yaml
 import sys
+import re
 
 mail = Mail()
 
@@ -51,13 +51,14 @@ def contribute():
             post = {}
             post['title'] = str(form.title.data)
             post['author'] = str(form.author.data) or 'Anonymous'
-            post['date'] = datetime.now().strftime('%d.%m.%Y')
+            post['date'] = datetime.now().strftime('%Y-%m-%d')
             body = str(form.article.data)
             output = yaml.dump(post, default_flow_style=False) + '\n' + body
 
-            id = str(uuid())
+            path = str(form.title.data.lower())
+            path = re.sub('\W', '_', path)
 
-            with open('content/drafts/%s.md' % id, 'w') as f:
+            with open('content/drafts/%s.md' % path, 'w') as f:
                 f.write(output)
 
             # TODO: send email with unlock code=id
