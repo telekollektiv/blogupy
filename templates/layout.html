@@ -15,17 +15,18 @@
                     <h1 class="first-red">
                         <a href="/">Atopie</a>
                     </h1>
+                    <nav>
+                        <ul class="list-inline">
+                            <li><a href="{{ url_for('posts') }}">Blog</a></li>
+                            <li><a href="{{ url_for('projekt') }}">Über Atopie</a></li>
+                            <li><a href="{{ url_for('kontakt') }}">Kontakt</a></li>
+                        </ul>
+                    </nav>
                 </header>
             </div>
 
             <div class="col-xs-4 sidebar-nav">
-                <nav>
-                    <ul class="list-unstyled">
-                        <li><a href="{{ url_for('posts') }}">Blog</a></li>
-                        <li><a href="{{ url_for('projekt') }}">Über Atopie</a></li>
-                        <li><a href="{{ url_for('kontakt') }}">Kontakt</a></li>
-                    </ul>
-                </nav>
+                <p>ohai</p>
             </div>
 
             <div>
