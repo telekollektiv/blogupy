@@ -20,7 +20,7 @@ body {
 }
 
 .container {
-    max-width: 1500px;
+    max-width: 800px;
     margin: 20px auto;
 }
 
@@ -93,7 +93,7 @@ nav a:hover, nav a:hover {
 
 article, .content {
   background-color: #dfe5e2;
-  padding: 40px;
+  padding: 20px 40px;
 }
 
 .content hr {
@@ -104,6 +104,10 @@ article h2 {
     font-family: 'Cella', sans-serif;
     letter-spacing: -1px;
     font-size: 20px;
+}
+
+article p {
+    padding: 0 0 0 40px;
 }
 
 .art-list a {
