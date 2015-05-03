@@ -1,8 +1,6 @@
 Flask
 Flask-FlatPages
-Frozen-Flask
 Jinja2
-Markdown
 MarkupSafe
 PyYAML
 Pygments
@@ -11,5 +9,3 @@ itsdangerous
 wsgiref
 Flask-WTF
 Flask-Mail
-flask-paginate
-flask-pagedown
