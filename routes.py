@@ -54,6 +54,7 @@ def contribute():
         else:
             post = {}
             post['title'] = str(form.title.data)
+            post['author'] = str(form.author.data) or 'Anonymous'
             post['date'] = datetime.now().strftime('%d.%m.%Y')
             body = str(form.article.data)
             output = yaml.dump(post, default_flow_style=False) + '\n' + body
