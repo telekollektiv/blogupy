@@ -100,6 +100,10 @@ article, .content {
   padding: 40px;
 }
 
+.content hr {
+  border-color: black;
+}
+
 article h2 {
     font-family: 'Cella', sans-serif;
     letter-spacing: -1px;

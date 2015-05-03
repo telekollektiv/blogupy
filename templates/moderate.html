@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="content">
+    {% for post in posts %}
+        <div class="row">
+            <p>
+                <a href="#">{{ post.title }}</a>
+            </p>
+
+            <form method="POST">
+                <input type="submit" name="edit" value="editieren">
+                {% if post.path.startswith('drafts/') %}
+                    <input type="submit" name="unlock" value="freigeben">
+                {% endif %}
+                <input type="submit" name="delete" value="l&ouml;schen">
+            </form>
+        </div>
+        {% if not loop.last %}
+        <hr>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}

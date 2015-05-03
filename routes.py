@@ -77,6 +77,16 @@ def contribute_done():
     return render_template('contribute.html', success=True)
 
 
+@app.route('/moderate/')
+def moderate():
+    return render_template('moderate.html', posts=flatpages)
+
+
+@app.route('/moderate/', methods=['POST'])
+def moderate_post():
+    return '\\(-_-)/'
+
+
 @app.route('/kontakt/', methods=['GET', 'POST'])
 def kontakt():
     form = ContactForm()
