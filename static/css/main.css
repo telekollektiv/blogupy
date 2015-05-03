@@ -24,6 +24,11 @@ body {
     margin: 20px auto;
 }
 
+.quote {
+    width: 75%;
+    margin: auto;
+}
+
 h1, h2, h3 {
     font-family: 'Old', sans-serif;
     text-transform: uppercase;

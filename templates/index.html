@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
+{% if posts %}
 {% for post in posts %}
 <article>
     <div class="art-list">
@@ -14,4 +15,13 @@
     </div>
 </article>
 {% endfor %}
+{% else %}
+<div class="content">
+    <pre class="quote">The masses are in reality
+their own leaders,
+dialectically creating
+their own development
+process.</pre>
+</div>
+{% endif %}
 {% endblock %}
