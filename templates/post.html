@@ -1,8 +1,11 @@
 {% extends "layout.html" %}
 {% block content %}
 <article>
-<p class="art-date">{{ post.date }}</p>
-<h2>{{ post.title }}</h2>
-{{ post.html|safe }}
+    <h1>{{ post.title }}</h1>
+
+    <small class="pull-right">Vom: {{ post.date }}</small>
+    <small>Von: {{ post.author }}</small>
+
+    {{ post.html|safe }}
 </article>
 {% endblock %}

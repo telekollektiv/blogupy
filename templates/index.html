@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block content %}
+{% if posts %}
+{% for post in posts %}
+<article>
+    <div class="art-list">
+        <a href="{{ post.path[5:] }}.html">
+            <h1>{{ post.title }}</h1>
+        </a>
+
+        <small class="pull-right">Vom: {{ post.date }}</small>
+        <small>Von: {{ post.author }}</small>
+
+        {{ post.html|safe }}
+    </div>
+</article>
+{% endfor %}
+{% else %}
+<div class="content">
+    <p class="quote">
+        The masses are in reality<br>
+        their own leaders,<br>
+        dialectically creating<br>
+        their own development<br>
+        process.
+    </p>
+</div>
+{% endif %}
+{% endblock %}

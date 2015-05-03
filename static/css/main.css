@@ -4,19 +4,6 @@
   src: local('Cella'), url(Cella.otf) format('opentype');
 }
 
-
-/* normal txt
-
-@font-face {
-  font-family: 'Cella';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Cella'), url(Cella.ttf) format('truetype');
-}
-*/
-
-/* HEADLINES */
-
 @font-face {
   font-family: 'Old';
   font-style: normal;
@@ -33,8 +20,13 @@ body {
 }
 
 .container {
-    max-width: 1500px;
+    max-width: 800px;
     margin: 20px auto;
+}
+
+.quote {
+    width: 50%;
+    margin: auto;
 }
 
 h1, h2, h3 {
@@ -43,7 +35,7 @@ h1, h2, h3 {
     letter-spacing: 5px;
 }
 
-header {
+header, footer {
     font-family: 'Old', sans-serif;
     text-align: center;
     background-color: #dfe5e2;
@@ -51,8 +43,12 @@ header {
 }
 
 header h1 {
-    font-size: 80px;
+    font-size: 100px;
+    background: url('/static/img/header.jpg');
+    background-size: 100%;
+    background-position: 0px -40px;
     margin: 0;
+    padding: 10px;
     letter-spacing: 5px;
 }
 
@@ -67,47 +63,55 @@ header h1 a {
 header h1 a:hover {
     color: #c10800;
     text-decoration: none;
+}
 
+footer a {
+    font-size: small;
+}
+
+nav {
+    background: #280211 url("/static/img/nav_scratch.png");
+    font-size: 20px;
 }
 
 header nav {
     border-top: 4px solid #c10800;
-    background-color: #280211;
-    font-size: 20px;
+}
+
+footer nav {
+    border-bottom: 4px solid #c10800;
 }
 
 nav ul {
     margin-bottom: 0px;
 }
 
-header nav a {
+nav a, nav a {
     color: #dfe5e2;
 }
 
-header nav a:hover {
+nav a:hover, nav a:hover {
     color: #c10800;
     text-decoration: none;
 }
 
-.sidebar {
-    background-color: #dfe5e2;
-    height: 88px;
-}
-
-.sidebar-nav {
-    background-color: #dfe5e2;
-}
-/*
-.black-bar {
-  border-top: 4px solid #c10800;
-  background-color: #280211;
-  height: 32px;
-}
-*/
-
 article, .content {
   background-color: #dfe5e2;
-  padding: 40px;
+  padding: 20px 40px;
+}
+
+.content hr {
+  border-color: black;
+}
+
+article h2 {
+    font-family: 'Cella', sans-serif;
+    letter-spacing: -1px;
+    font-size: 20px;
+}
+
+article p {
+    padding: 0 0 0 40px;
 }
 
 .art-list a {
@@ -155,6 +159,23 @@ form textarea#message {
   font-size: 1.1em;
 }
 
+label {
+  font-size: 1.2em;
+  font-weight: bold;
+  display: block;
+  padding: 10px 0;
+  margin: 0;
+}
+
+input {
+    width: 100%;
+    margin: 10px 0px;
+}
+
+textarea {
+    width: 100%;
+}
+
 form input#submit {
   display: block;
   border:1px solid #280211;
@@ -176,36 +197,4 @@ form input#submit:hover{
   background-color: #6B0F1A;
   padding: 10px;
   width: 400px;
-}
-
-/*
-footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
-
-.footer_txt {
-    background-color: #280211;
-    padding: 15px 40px;
-    font-family: 'Old', sans-serif;
-}
-
-.footer_txt a {
-    color: #280211;
-}
-
-.footer_txt a:hover {
-    text-decoration: none;
-    color: #6B0F1A;
-}
-
-footer ul {
-    margin: 0;
-}
-
-footer hr {
-    border: 1px solid #280211;
-    width: 100%;
-    margin-bottom: 5px;
 }

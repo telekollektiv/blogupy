@@ -3,39 +3,60 @@
 {% endblock %}
 {% block content %}
 <div class="content">
-    <h2>Contribute</h2>
-    <p>Submit your Ideas</p>
-
     {% if success %}
-        <h3>Danke für Deinen Beitrag!</h3>
+        <h2>Danke für Deinen Beitrag!</h2>
         <p>Dein Beitrag wird jetzt von der Redaktion geprüft und wenn alles in Ordnung ist veröffentlicht.</p>
     {% else %}
-
+        <h2>Contribute</h2>
+        <p>Submit your Ideas</p>
 
         {% for message in form.title.errors %}
             <div class="flash">{{ message }}</div>
         {% endfor %}
 
-        {% for message in form.article.errors %}
-            <div class="flash">{{ message }}</div>
-        {% endfor %}
-
-        <form action="{{ url_for('contribute') }}" method=post>
+        <form action="/contribute/" method="post" class="row">
             {{ form.hidden_tag() }}
 
-            {{ form.author.label }}
-            {{ form.author }}
-        {% for message in form.author.errors %}
-            <div class="flash">{{ message }}</div>
-        {% endfor %}
+            {% for message in form.author.errors %}
+                <div class="col-xs-12 flash">{{ message }}</div>
+            {% endfor %}
 
-            {{ form.title.label }}
-            {{ form.title }}
+            <div class="col-xs-2 col-xs-offset-3">
+                {{ form.author.label }}
+            </div>
 
-            {{ form.article.label }}
-            {{ form.article }}
+            <div class="col-xs-4">
+                {{ form.author(placeholder='Anonymous') }}
+            </div>
+            <div class="col-xs-3"></div>
 
-            {{ form.submit }}
+            {% for message in form.title.errors %}
+                <div class="col-xs-12 flash">{{ message }}</div>
+            {% endfor %}
+
+            <div class="col-xs-2 col-xs-offset-3">
+                {{ form.title.label }}
+            </div>
+
+            <div class="col-xs-4">
+                {{ form.title(required='') }}
+            </div>
+
+            {% for message in form.article.errors %}
+                <div class="col-xs-12 flash">{{ message }}</div>
+            {% endfor %}
+
+            <div class="col-xs-8 col-xs-offset-2">
+                {{ form.article.label }}
+            </div>
+
+            <div class="col-xs-10 col-xs-offset-1">
+                {{ form.article(rows=15, required='') }}
+            </div>
+
+            <div class="col-xs-2 col-xs-offset-10">
+                {{ form.submit }}
+            </div>
         </form>
     {% endif %}
 </div>

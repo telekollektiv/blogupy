@@ -21,7 +21,7 @@ class ContactForm(Form):
 
 # Contribute Form
 class ContributeForm(Form):
-    author = TextField("Author", [validators.Required("Bitte gib einen Author an!")])
+    author = TextField("Author")
     title = TextField("Titel", [validators.Required("Bitte gib einen Titel an!")])
     article = TextAreaField("Artikel", [validators.Required("Bitte schreibe einen Artikel")])
     submit = SubmitField("Senden")
