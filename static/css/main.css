@@ -59,7 +59,10 @@ header h1 a {
 header h1 a:hover {
     color: #c10800;
     text-decoration: none;
+}
 
+footer a {
+    font-size: small;
 }
 
 nav {
