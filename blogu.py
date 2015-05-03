@@ -47,7 +47,6 @@ def posts():
 
 
 for url, template in app.config['CUSTOM_PAGES']:
-    print(repr(url))
     @app.route(url)
     def dynamic():
         return render_template(template)
