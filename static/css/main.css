@@ -156,6 +156,23 @@ form textarea#message {
   font-size: 1.1em;
 }
 
+label {
+  font-size: 1.2em;
+  font-weight: bold;
+  display: block;
+  padding: 10px 0;
+  margin: 0;
+}
+
+input {
+    width: 100%;
+    margin: 10px 0px;
+}
+
+textarea {
+    width: 100%;
+}
+
 form input#submit {
   display: block;
   border:1px solid #280211;
