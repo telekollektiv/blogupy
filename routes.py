@@ -7,6 +7,7 @@ from flask.ext.mail import Message, Mail
 from forms import ContactForm, ContributeForm
 from datetime import datetime
 from ghettodown import ghettodown
+from uuid import uuid4 as uuid
 import yaml
 import sys
 
@@ -47,23 +48,25 @@ def post(name):
 def contribute():
     form = ContributeForm()
     if request.method == 'POST':
-        print (type(form.title.data))
+        # print (type(form.title.data))
         if not form.validate():
             return render_template('contribute.html', form=form)
         else:
-            '''
             post = {}
             post['title'] = str(form.title.data)
             post['date'] = datetime.now().strftime('%d.%m.%Y')
-            body = 'this is **markdown**'  # TODO: use real body
+            body = str(form.article.data)
             output = yaml.dump(post, default_flow_style=False) + '\n' + body
 
-            with open('content/drafts/changeme.md', 'w') as f:  # TODO: use real, unpredictable filename
+            id = str(uuid())
+
+            with open('content/drafts/%s.md' % id, 'w') as f:
                 f.write(output)
 
+            # TODO: send email with unlock code=id
+
             return redirect('/contribute/done')
-            '''
-            return ghettodown(form.article.data)
+            # return ghettodown(form.article.data)
     else:
         return render_template('contribute.html', form=form)
 
