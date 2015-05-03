@@ -43,8 +43,9 @@ header, footer {
 }
 
 header h1 {
-    font-size: 80px;
+    font-size: 100px;
     margin: 0;
+    padding: 10px;
     letter-spacing: 5px;
 }
 
