@@ -81,14 +81,6 @@ nav a:hover, nav a:hover {
     text-decoration: none;
 }
 
-/*
-.black-bar {
-  border-top: 4px solid #c10800;
-  background-color: #280211;
-  height: 32px;
-}
-*/
-
 article, .content {
   background-color: #dfe5e2;
   padding: 40px;
