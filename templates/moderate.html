@@ -7,7 +7,7 @@
                 <a href="#">{{ post.title }}</a>
             </p>
 
-            <form method="POST">
+            <form method="POST" action="/moderate/{{ post.path.split('/')[-1] }}">
                 <input type="submit" name="edit" value="editieren">
                 {% if post.path.startswith('drafts/') %}
                     <input type="submit" name="unlock" value="freigeben">

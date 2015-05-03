@@ -5,6 +5,7 @@ from flask.ext.mail import Message, Mail
 from forms import ContactForm, ContributeForm
 from datetime import datetime
 from ghettodown import ghettodown
+import shutil
 import yaml
 import sys
 import re
@@ -18,6 +19,21 @@ app.config.from_object('config')
 app.config['FLATPAGES_HTML_RENDERER'] = ghettodown
 app.secret_key = 'development key'
 mail.init_app(app)
+
+
+def notify(group, subject, body):
+    try:
+        recv = app.config[group]
+        sender = app.config["MAIL_USERNAME"]
+        msg = Message(subject, sender=sender, recipients=[recv])
+
+        if body.startswith('/'):
+            body = app.config['SELF'] + body
+
+        msg.body = body
+        mail.send(msg)
+    except:
+        pass
 
 
 @app.route('/')
@@ -61,7 +77,7 @@ def contribute():
             with open('content/drafts/%s.md' % path, 'w') as f:
                 f.write(output)
 
-            # TODO: send email with unlock code=id
+            notify('MAIL_RECV_MODERATE', 'Please unlock post: %s' % post['title'], '/moderate/')
 
             return redirect('/contribute/done')
     else:
@@ -78,9 +94,14 @@ def moderate():
     return render_template('moderate.html', posts=flatpages)
 
 
-@app.route('/moderate/', methods=['POST'])
-def moderate_post():
-    return '\\(-_-)/'
+@app.route('/moderate/<post>', methods=['POST'])
+def moderate_post(post):
+    if 'unlock' in request.form:
+        shutil.move('content/drafts/%s.md' % post, 'content/posts/%s.md' % post)
+        notify('MAIL_RECV_MODERATE', 'freigeschaltet: %s' % post, '/%s.html' % post)
+    else:
+        return 'invalid action'
+    return redirect('/moderate/')
 
 
 @app.route('/kontakt/', methods=['GET', 'POST'])
@@ -90,13 +111,12 @@ def kontakt():
         if not form.validate():
             return render_template('kontakt.html', form=form)
         else:
-            user = app.config["MAIL_USERNAME"]
-            msg = Message(form.subject.data, sender=user, recipients=[user])
-            msg.body = """
+            subject = form.subject.data
+            body = """
             From: %s <%s>
             %s
             """ % (form.name.data, form.email.data, form.message.data)
-            mail.send(msg)
+            notify('MAIL_RECV_CONTACT', subject, body)
             return redirect('/kontakt/done')
     elif request.method == 'GET':
         return render_template('kontakt.html', form=form)
