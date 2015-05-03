@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 from flask import Flask, render_template, request, flash, redirect
 from flask_flatpages import FlatPages
 from flask.ext.mail import Message, Mail
@@ -8,6 +9,7 @@ from ghettodown import ghettodown
 import shutil
 import yaml
 import sys
+import os
 import re
 
 mail = Mail()
@@ -99,6 +101,11 @@ def moderate_post(post):
     if 'unlock' in request.form:
         shutil.move('content/drafts/%s.md' % post, 'content/posts/%s.md' % post)
         notify('MAIL_RECV_MODERATE', 'freigeschaltet: %s' % post, '/%s.html' % post)
+    elif 'delete' in request.form:
+        for path in ['content/drafts/%s.md', 'content/posts/%s.md']:
+            if os.path.exists(path % post):
+                os.remove(path % post)
+        notify('MAIL_RECV_MODERATE', 'geloescht: %s' % post, ':\'(')
     else:
         return 'invalid action'
     return redirect('/moderate/')
