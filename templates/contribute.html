@@ -20,7 +20,7 @@
             <div class="flash">{{ message }}</div>
         {% endfor %}
 
-        <form action="{{ url_for('contribute') }}" method=post>
+        <form action="/contribute/" method=post>
             {{ form.hidden_tag() }}
 
             {{ form.author.label }}

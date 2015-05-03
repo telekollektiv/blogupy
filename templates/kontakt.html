@@ -10,7 +10,7 @@
         <p>We'll get back to you shortly. ...maybe</p>
     {% else %}
 
-        <form action="{{ url_for('kontakt') }}" method=post>
+        <form action="/kontakt/" method=post>
             {{ form.hidden_tag() }}
 
             {{ form.name.label }}

@@ -46,9 +46,11 @@ def posts():
     return render_template('index.html', posts=posts)
 
 
-@app.route('/projekt')
-def projekt():
-    return render_template('projekt.html')
+for url, template in app.config['CUSTOM_PAGES']:
+    print(repr(url))
+    @app.route(url)
+    def dynamic():
+        return render_template(template)
 
 
 @app.route('/<name>.html')
