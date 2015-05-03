@@ -35,7 +35,7 @@ h1, h2, h3 {
     letter-spacing: 5px;
 }
 
-header {
+header, footer {
     font-family: 'Old', sans-serif;
     text-align: center;
     background-color: #dfe5e2;
@@ -62,7 +62,7 @@ header h1 a:hover {
 
 }
 
-header nav {
+nav {
     border-top: 4px solid #c10800;
     background-color: #280211;
     font-size: 20px;
@@ -72,11 +72,11 @@ nav ul {
     margin-bottom: 0px;
 }
 
-header nav a {
+nav a, nav a {
     color: #dfe5e2;
 }
 
-header nav a:hover {
+nav a:hover, nav a:hover {
     color: #c10800;
     text-decoration: none;
 }
@@ -181,30 +181,10 @@ form input#submit:hover{
   width: 400px;
 }
 
-/*
 footer {
     position: fixed;
     bottom: 0;
     width: 100%;
-}
-
-.footer_txt {
-    background-color: #280211;
-    padding: 15px 40px;
-    font-family: 'Old', sans-serif;
-}
-
-.footer_txt a {
-    color: #280211;
-}
-
-.footer_txt a:hover {
-    text-decoration: none;
-    color: #6B0F1A;
-}
-
-footer ul {
-    margin: 0;
 }
 
 footer hr {
