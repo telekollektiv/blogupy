@@ -10,11 +10,7 @@
         <h2>Contribute</h2>
         <p>Submit your Ideas</p>
 
-        {% for message in form.title.errors %}
-            <div class="flash">{{ message }}</div>
-        {% endfor %}
-
-        <form action="/contribute/" method="post" class="row">
+        <form action="/contribute/" method="post" class="row" ng:submit="submit($event)">
             {{ form.hidden_tag() }}
 
             {% for message in form.author.errors %}
@@ -26,7 +22,7 @@
             </div>
 
             <div class="col-xs-4">
-                {{ form.author(placeholder='Anonymous') }}
+                {{ form.author(placeholder='Anonymous', **{'ng-model': 'data.author'}) }}
             </div>
             <div class="col-xs-3"></div>
 
@@ -39,7 +35,7 @@
             </div>
 
             <div class="col-xs-4">
-                {{ form.title(required='') }}
+                {{ form.title(required='', **{'ng-model': 'data.title'}) }}
             </div>
 
             {% for message in form.article.errors %}
@@ -51,7 +47,7 @@
             </div>
 
             <div class="col-xs-10 col-xs-offset-1">
-                {{ form.article(rows=15, required='') }}
+                {{ form.article(rows=15, required='', **{'ng-model': 'data.article'}) }}
             </div>
 
             <div class="col-xs-2 col-xs-offset-10">

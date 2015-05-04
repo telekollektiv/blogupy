@@ -80,7 +80,12 @@ def contribute():
     form = ContributeForm()
     if request.method == 'POST':
         if not form.validate():
-            return render_template('contribute.html', form=form)
+            if request.query_string:
+                resp = jsonify({'status': 'error'})
+                resp.status_code = 400
+                return resp
+            else:
+                return render_template('contribute.html', form=form)
         else:
             post = {}
             post['title'] = str(form.title.data)
@@ -97,7 +102,10 @@ def contribute():
 
             notify('MAIL_RECV_MODERATE', 'Please unlock post: %s' % post['title'], '/moderate/')
 
-            return redirect('/contribute/done')
+            if request.query_string:
+                return jsonify({'status': 'success'})
+            else:
+                return redirect('/contribute/done')
     else:
         return render_template('contribute.html', form=form)
 
