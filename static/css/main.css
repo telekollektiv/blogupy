@@ -119,7 +119,7 @@ nav a:hover {
 
 article, .content {
   background-color: #dfe5e2;
-  padding: 20px 40px;
+  padding: 10px 20px;
   word-wrap: break-word;
 }
 
@@ -134,7 +134,7 @@ article h2 {
 }
 
 article p {
-    padding: 0 0 0 40px;
+    padding: 0 0 0 15px;
 }
 
 article a {
