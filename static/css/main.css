@@ -153,35 +153,6 @@ article a:hover {
   text-align: right;
 }
 
-/* Contact form */
-
-form label {
-  font-size: 1.2em;
-  font-weight: bold;
-  display: block;
-  padding: 10px 0;
-}
-
-form input#name,
-form input#email,
-form input#subject {
-  width: 400px;
-  background-color: #efefef;
-  border: 1px solid #280211;
-  padding: 5px;
-  font-size: 1.1em;
-}
-
-form textarea#message {
-  width: 500px;
-  height: 100px;
-  background-color: #efefef;
-  border: 1px solid #280211;
-  margin-bottom: 10px;
-  padding: 5px;
-  font-size: 1.1em;
-}
-
 label {
   font-size: 1.2em;
   font-weight: bold;
@@ -195,24 +166,22 @@ input {
     margin: 10px 0px;
 }
 
-textarea {
-    width: 100%;
-}
-
 form input#submit {
-  display: block;
-  border:1px solid #280211;
-  padding: 10px;
-  font-weight:bold;
-  text-align: center;
-  color: #280211;
-  background-color: #efefef;
+    border:1px solid #280211;
+    padding: 10px;
+    font-weight:bold;
+    text-align: center;
+    color: #280211;
+    background-color: #efefef;
 }
 
 form input#submit:hover{
-  cursor: pointer;
-  border:1px solid #c1c1c1;
-  background-color: #dbdbdb;
+    background-color: #dbdbdb;
+}
+
+
+textarea {
+    width: 100%;
 }
 
 /* Message flashing */

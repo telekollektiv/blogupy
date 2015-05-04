@@ -1,16 +1,14 @@
 {% extends "layout.html" %}
-
 {% block content %}
-<article>
-    <h2>kontakt</h2>
-    <p>Hallo</p>
-
+<div class="content">
     {% if success %}
         <h3>Thank you for your message.</h3>
         <p>We'll get back to you shortly. ...maybe</p>
     {% else %}
+        <h2>kontakt</h2>
+        <p>Hallo</p>
 
-        <form action="/kontakt/" method=post>
+        <form action="/kontakt/" method="post">
             {{ form.hidden_tag() }}
 
             {{ form.name.label }}
@@ -35,7 +33,7 @@
             {% endfor %}
 
             {{ form.message.label }}
-            {{ form.message }}
+            {{ form.message(rows=10) }}
 
             {% for message in form.message.errors %}
                 <div class="flash">{{ message }}</div>
@@ -43,7 +41,6 @@
 
             {{ form.submit }}
         </form>
-
     {% endif %}
-</article>
+</div>
 {% endblock %}
