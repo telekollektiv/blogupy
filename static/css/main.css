@@ -92,8 +92,11 @@ nav a, nav a {
     color: #dfe5e2;
 }
 
-nav a:hover, nav a:hover {
+nav a:hover, nav a:focus {
     color: #c10800;
+}
+
+nav a:hover {
     text-decoration: none;
 }
 
