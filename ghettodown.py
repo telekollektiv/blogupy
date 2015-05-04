@@ -11,7 +11,6 @@ def ghettodown(txt):
     def swag(txt):
         FRESH = True
         P = False
-        print(escape(txt).split('\n'))
         for line in escape(txt).split('\n'):
             line = line.rstrip('\r')
             if line:
