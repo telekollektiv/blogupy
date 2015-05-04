@@ -12,28 +12,28 @@
             {{ form.hidden_tag() }}
 
             {{ form.name.label }}
-            {{ form.name }}
+            {{ form.name(required='') }}
 
             {% for message in form.name.errors %}
                 <div class="flash">{{ message }}</div>
             {% endfor %}
 
             {{ form.email.label }}
-            {{ form.email }}
+            {{ form.email(required='', type='email') }}
 
             {% for message in form.email.errors %}
                 <div class="flash">{{ message }}</div>
             {% endfor %}
 
             {{ form.subject.label }}
-            {{ form.subject }}
+            {{ form.subject(required='') }}
 
             {% for message in form.subject.errors %}
                 <div class="flash">{{ message }}</div>
             {% endfor %}
 
             {{ form.message.label }}
-            {{ form.message(rows=10) }}
+            {{ form.message(rows=10, required='') }}
 
             {% for message in form.message.errors %}
                 <div class="flash">{{ message }}</div>

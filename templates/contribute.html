@@ -11,26 +11,26 @@
         <form action="/contribute/" method="post" ng:submit="submit($event)">
             {{ form.hidden_tag() }}
 
-            {% for message in form.author.errors %}
-                <div class="flash">{{ message }}</div>
-            {% endfor %}
-
             {{ form.author.label }}
             {{ form.author(placeholder='Anonymous', **{'ng-model': 'data.author'}) }}
 
-            {% for message in form.title.errors %}
+            {% for message in form.author.errors %}
                 <div class="flash">{{ message }}</div>
             {% endfor %}
 
             {{ form.title.label }}
             {{ form.title(required='', **{'ng-model': 'data.title'}) }}
 
-            {% for message in form.article.errors %}
+            {% for message in form.title.errors %}
                 <div class="flash">{{ message }}</div>
             {% endfor %}
 
             {{ form.article.label }}
             {{ form.article(rows=15, required='', **{'ng-model': 'data.article'}) }}
+
+            {% for message in form.article.errors %}
+                <div class="flash">{{ message }}</div>
+            {% endfor %}
 
             {{ form.submit }}
         </form>
