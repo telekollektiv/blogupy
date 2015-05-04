@@ -11,6 +11,10 @@
   src: local('Old'), url(Old.ttf) format('truetype');
 }
 
+[ng-cloak] {
+    display: none !important;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -93,6 +97,22 @@ nav a:hover, nav a:hover {
     text-decoration: none;
 }
 
+#loading-bar .bar{
+    background: #280211;
+}
+
+#loading-bar .peg{
+    -moz-box-shadow: #280211 1px 0 6px 1px;
+    -ms-box-shadow: #280211 1px 0 6px 1px;
+    -webkit-box-shadow: #280211 1px 0 6px 1px;
+    box-shadow: #280211 1px 0 6px 1px;
+}
+
+#loading-bar-spinner .spinner-icon{
+    border-top-color: #280211;
+    border-left-color: #280211;
+}
+
 article, .content {
   background-color: #dfe5e2;
   padding: 20px 40px;
@@ -112,14 +132,14 @@ article p {
     padding: 0 0 0 40px;
 }
 
-.art-list a {
+article a {
     font-family: 'Old', sans-serif;
     letter-spacing: 5px;
     color: #280211;
     text-decoration: none;
 }
 
-.art-list a:hover {
+article a:hover {
     color: #c10800;
     text-decoration: none;
 }
