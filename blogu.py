@@ -49,7 +49,7 @@ def notify(group, subject, body):
 def posts():
     postdir = app.config['POST_DIR']
     posts = [p for p in flatpages if p.path.startswith(postdir)]
-    posts.sort(key=lambda item: item['date'], reverse=False)
+    posts.sort(key=lambda item: item['date'], reverse=True)
     return render_template('index.html', posts=posts)
 
 
@@ -57,7 +57,7 @@ def posts():
 def json_articles():
     postdir = app.config['POST_DIR']
     posts = [{'meta': p.meta, 'html': p.html, 'path': p.path[6:]} for p in flatpages if p.path.startswith(postdir)]
-    posts.sort(key=lambda item: item['meta']['date'], reverse=False)
+    posts.sort(key=lambda item: item['meta']['date'], reverse=True)
     return jsonify({'articles': posts})
 
 
@@ -118,7 +118,7 @@ def contribute_done():
 @app.route('/moderate/')
 def moderate():
     posts = list(flatpages)
-    posts.sort(key=lambda item: item['date'], reverse=False)
+    posts.sort(key=lambda item: item['date'], reverse=True)
     return render_template('moderate.html', posts=posts)
 
 
