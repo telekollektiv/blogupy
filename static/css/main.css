@@ -120,7 +120,7 @@ nav a:hover {
 article, .content {
   background-color: #dfe5e2;
   padding: 20px 40px;
-  word-wrap: break-all;
+  word-wrap: break-word;
 }
 
 .content hr {
