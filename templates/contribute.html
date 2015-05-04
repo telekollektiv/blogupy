@@ -10,49 +10,31 @@
         <h2>Contribute</h2>
         <p>Submit your Ideas</p>
 
-        <form action="/contribute/" method="post" class="row" ng:submit="submit($event)">
+        <form action="/contribute/" method="post" ng:submit="submit($event)">
             {{ form.hidden_tag() }}
 
             {% for message in form.author.errors %}
-                <div class="col-xs-12 flash">{{ message }}</div>
+                <div class="flash">{{ message }}</div>
             {% endfor %}
 
-            <div class="col-xs-2 col-xs-offset-3">
-                {{ form.author.label }}
-            </div>
-
-            <div class="col-xs-4">
-                {{ form.author(placeholder='Anonymous', **{'ng-model': 'data.author'}) }}
-            </div>
-            <div class="col-xs-3"></div>
+            {{ form.author.label }}
+            {{ form.author(placeholder='Anonymous', **{'ng-model': 'data.author'}) }}
 
             {% for message in form.title.errors %}
-                <div class="col-xs-12 flash">{{ message }}</div>
+                <div class="flash">{{ message }}</div>
             {% endfor %}
 
-            <div class="col-xs-2 col-xs-offset-3">
-                {{ form.title.label }}
-            </div>
-
-            <div class="col-xs-4">
-                {{ form.title(required='', **{'ng-model': 'data.title'}) }}
-            </div>
+            {{ form.title.label }}
+            {{ form.title(required='', **{'ng-model': 'data.title'}) }}
 
             {% for message in form.article.errors %}
-                <div class="col-xs-12 flash">{{ message }}</div>
+                <div class="flash">{{ message }}</div>
             {% endfor %}
 
-            <div class="col-xs-8 col-xs-offset-2">
-                {{ form.article.label }}
-            </div>
+            {{ form.article.label }}
+            {{ form.article(rows=15, required='', **{'ng-model': 'data.article'}) }}
 
-            <div class="col-xs-10 col-xs-offset-1">
-                {{ form.article(rows=15, required='', **{'ng-model': 'data.article'}) }}
-            </div>
-
-            <div class="col-xs-2 col-xs-offset-10">
-                {{ form.submit }}
-            </div>
+            {{ form.submit }}
         </form>
     {% endif %}
 </div>
