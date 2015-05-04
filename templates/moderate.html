@@ -4,7 +4,7 @@
     {% for post in posts %}
         <div class="row">
             <p>
-                <a href="#">{{ post.title }}</a>
+                <a href="#">{{ post.meta.title }}</a>
             </p>
 
             <form method="POST" action="/moderate/{{ post.path.split('/')[-1] }}">

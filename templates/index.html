@@ -5,11 +5,11 @@
 {% for post in posts %}
 <article>
     <a href="{{ post.path[5:] }}.html">
-        <h1>{{ post.title }}</h1>
+        <h1>{{ post.meta.title }}</h1>
     </a>
 
-    <small class="pull-right">Vom: {{ post.date }}</small>
-    <small>Von: {{ post.author }}</small>
+    <small class="pull-right">Vom: {{ post.meta.date }}</small>
+    <small>Von: {{ post.meta.author }}</small>
 
     {{ post.html|safe }}
 </article>

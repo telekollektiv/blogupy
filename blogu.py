@@ -45,20 +45,32 @@ def notify(group, subject, body):
         pass
 
 
+def prepare_article(article):
+    article = {
+        'meta': article.meta,
+        'path': article.path,
+        'html': article.html
+    }
+    article['meta']['date'] = article['meta']['date'][:19]
+    return article
+
+
+def get_articles(prefix=''):
+    articles = [prepare_article(a) for a in flatpages if a.path.startswith(prefix)]
+    articles.sort(key=lambda item: item['meta']['date'], reverse=True)
+    return articles
+
+
 @app.route('/')
-def posts():
-    postdir = app.config['POST_DIR']
-    posts = [p for p in flatpages if p.path.startswith(postdir)]
-    posts.sort(key=lambda item: item['date'], reverse=True)
-    return render_template('index.html', posts=posts)
+def index():
+    articles = get_articles(app.config['POST_DIR'])
+    return render_template('index.html', posts=articles)
 
 
 @app.route('/index.json')
 def json_articles():
-    postdir = app.config['POST_DIR']
-    posts = [{'meta': p.meta, 'html': p.html, 'path': p.path[6:]} for p in flatpages if p.path.startswith(postdir)]
-    posts.sort(key=lambda item: item['meta']['date'], reverse=True)
-    return jsonify({'articles': posts})
+    articles = get_articles(app.config['POST_DIR'])
+    return jsonify({'articles': articles})
 
 
 for url, template in app.config['CUSTOM_PAGES']:
@@ -117,9 +129,8 @@ def contribute_done():
 
 @app.route('/moderate/')
 def moderate():
-    posts = list(flatpages)
-    posts.sort(key=lambda item: item['date'], reverse=True)
-    return render_template('moderate.html', posts=posts)
+    articles = get_articles()
+    return render_template('moderate.html', posts=articles)
 
 
 @app.route('/moderate/<post>', methods=['POST'])
