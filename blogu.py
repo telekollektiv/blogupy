@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from flask import Flask, render_template, request, flash, redirect
+from flask import Flask, render_template, request, flash, redirect, jsonify
 from flask_flatpages import FlatPages
 from flask.ext.mail import Message, Mail
 from forms import ContactForm, ContributeForm
@@ -21,6 +21,13 @@ app.config.from_object('config')
 app.config['FLATPAGES_HTML_RENDERER'] = ghettodown
 app.secret_key = 'development key'
 mail.init_app(app)
+
+
+rt = render_template
+
+
+def render_template(*args, **kwargs):
+    return rt(*args, qs=request.query_string, **kwargs)
 
 
 def notify(group, subject, body):
@@ -44,6 +51,14 @@ def posts():
     posts = [p for p in flatpages if p.path.startswith(postdir)]
     posts.sort(key=lambda item: item['date'], reverse=False)
     return render_template('index.html', posts=posts)
+
+
+@app.route('/index.json')
+def json_articles():
+    postdir = app.config['POST_DIR']
+    posts = [{'meta': p.meta, 'html': p.html, 'path': p.path[6:]} for p in flatpages if p.path.startswith(postdir)]
+    posts.sort(key=lambda item: item['meta']['date'], reverse=False)
+    return jsonify({'articles': posts})
 
 
 for url, template in app.config['CUSTOM_PAGES']:
@@ -70,7 +85,7 @@ def contribute():
             post = {}
             post['title'] = str(form.title.data)
             post['author'] = str(form.author.data) or 'Anonymous'
-            post['date'] = datetime.now().strftime('%Y-%m-%d')
+            post['date'] = str(datetime.now())
             body = str(form.article.data)
             output = yaml.dump(post, default_flow_style=False) + '\n' + body
 
@@ -94,7 +109,9 @@ def contribute_done():
 
 @app.route('/moderate/')
 def moderate():
-    return render_template('moderate.html', posts=flatpages)
+    posts = list(flatpages)
+    posts.sort(key=lambda item: item['date'], reverse=False)
+    return render_template('moderate.html', posts=posts)
 
 
 @app.route('/moderate/<post>', methods=['POST'])
