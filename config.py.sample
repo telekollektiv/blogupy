@@ -5,6 +5,18 @@ MAIL_USE_TLS = True
 MAIL_USERNAME = 'support@example.net'
 MAIL_PASSWORD = 'SECRET PASSWORD'
 
-# Blog form
-ADMIN_PASSWORD = 'SECRET PASSWORD'
+MAIL_RECV_MODERATE = 'mail@example.com'
+MAIL_RECV_CONTACT = 'mail@example.com'
+
+CUSTOM_PAGES = [
+    ('/about/', 'about.html')
+]
+
+# Blog Form
+DEBUG = True
+SELF = 'http://127.0.0.1:5000'
+FLATPAGES_AUTO_RELOAD = DEBUG
+FLATPAGES_EXTENSION = '.md'
+FLATPAGES_ROOT = 'content'
+POST_DIR = 'posts'
 DRAFT_DIR = 'drafts'
