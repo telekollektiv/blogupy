@@ -7,12 +7,12 @@ from wtforms import (TextField, TextAreaField, SubmitField,
 # Mail contact form
 class ContactForm(Form):
     name = TextField("Dein Name", [validators.Required("Bitte trage Deinen Namen ein")])
-    email = TextField("E-Mail Adresse", [
+    email = TextField("Deine E-Mail Adresse", [
                       validators.Required("Bitte trage eine E-Mail Adresse ein!"),
                       validators.Email("Die E-Mail Adresse ist nicht gültig!")])
-    subject = TextField("Subject", [
+    subject = TextField("Betreff", [
                         validators.Required("Bitte gib einen Betreff ein!.")])
-    message = TextAreaField("Message", [
+    message = TextAreaField("Nachricht", [
                             validators.Required("Bitte trage eine Nachricht ein!")])
     submit = SubmitField("Senden")
 

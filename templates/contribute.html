@@ -5,8 +5,9 @@
         <h2>Danke für Deinen Beitrag!</h2>
         <p>Dein Beitrag wird jetzt von der Redaktion geprüft und wenn alles in Ordnung ist veröffentlicht.</p>
     {% else %}
-        <h2>Contribute</h2>
-        <p>Submit your Ideas</p>
+        <h2>Mach mit!</h2>
+        <p>Werde Teil von Atopie.</p>
+	<p>Hier kannst du Texte und Gedanken mit Anderen teilen. Dein Beitrag wird auf diesem ATOPIE Blog veröffentlicht.</p>
 
         <form action="/contribute/" method="post" ng:submit="submit($event)">
             {{ form.hidden_tag() }}
