@@ -30,7 +30,7 @@ def render_template(*args, **kwargs):
     return rt(*args, qs=request.query_string, **kwargs)
 
 
-def notify(group, subject, body):
+def notify(group, subject, body, template=None):
     try:
         recv = app.config[group]
         sender = app.config["MAIL_USERNAME"]
@@ -38,6 +38,9 @@ def notify(group, subject, body):
 
         if body.startswith('/'):
             body = app.config['SELF'] + body
+
+        if template:
+            body = template % body
 
         msg.body = body
         mail.send(msg)
