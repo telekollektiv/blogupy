@@ -67,6 +67,11 @@ header h1 a:hover {
     text-decoration: none;
 }
 
+header h1 a:focus {
+    color: #280211;
+    text-decoration: none;
+}
+
 footer a {
     font-size: small;
 }
