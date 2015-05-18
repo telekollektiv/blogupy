@@ -3,7 +3,7 @@
 from flask import Flask, render_template, request, flash, redirect, jsonify
 from flask_flatpages import FlatPages
 from flask.ext.mail import Message, Mail
-from forms import ContactForm, ContributeForm
+from forms import ContactForm, ContributeForm, LoginForm
 from datetime import datetime
 from ghettodown import ghettodown
 import shutil
@@ -128,6 +128,12 @@ def contribute():
 @app.route('/contribute/done')
 def contribute_done():
     return render_template('contribute.html', success=True)
+
+
+@app.route('/login')
+def login():
+    form = LoginForm()
+    return render_template('login.html', form=form)
 
 
 @app.route('/moderate/')

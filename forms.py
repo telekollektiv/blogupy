@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from flask.ext.wtf import Form
-from wtforms import (TextField, TextAreaField, SubmitField,
+from wtforms import (TextField, PasswordField, TextAreaField, SubmitField,
                      validators, ValidationError)
 
 
@@ -17,6 +17,7 @@ class ContactForm(Form):
     submit = SubmitField("Senden")
 
 
+# have some free umlauts
 # äöü ÄÖÜ
 
 # Contribute Form
@@ -25,3 +26,9 @@ class ContributeForm(Form):
     title = TextField("Titel", [validators.Required("Bitte gib einen Titel an!")])
     article = TextAreaField("Artikel", [validators.Required("Bitte schreibe einen Artikel")])
     submit = SubmitField("Senden")
+
+
+class LoginForm(Form):
+    username = TextField('Username', [validators.Required('Bitte gib einen Usernamen ein')])
+    password = PasswordField('Password', [validators.Required('Bitte gib ein Passwort ein')])
+    submit = SubmitField('Login')

@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content">
+    <form method="post">
+        {{ form.hidden_tag() }}
+
+        {{ form.username.label }}
+        {{ form.username }}
+
+        {% for message in form.username.errors %}
+            <div class="flash">{{ message }}</div>
+        {% endfor %}
+
+        {{ form.password.label }}
+        {{ form.password }}
+
+        {% for message in form.password.errors %}
+            <div class="flash">{{ message }}</div>
+        {% endfor %}
+
+        {{ form.submit }}
+    </form>
+</div>
+{% endblock %}
