@@ -9,13 +9,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     $locationProvider.html5Mode(true);
     $routeProvider
         .when('/', {
-            templateUrl: '/?ng',
-            controller: 'IndexCtrl',
-            resolve: {
-                articles: ['articleService', function(articleService) {
-                    return articleService.get();
-                }]
-            }
+            templateUrl: '/?ng'
         })
         .when('/contribute/', {
             templateUrl: '/contribute/?ng',
@@ -37,14 +31,6 @@ app.factory('articleService', ['$http', function($http) {
 
 app.controller('AtopieCtrl', ['$rootScope', '$scope', function($rootScope, $scope) {
 }]);
-
-app.controller('IndexCtrl', ['$scope', '$sce', 'articles', function($scope, $sce, articles) {
-    $scope.articles = articles.data.articles;
-    $scope.articles.forEach(function(article) {
-        article.html = $sce.trustAsHtml(article.html);
-    });
-}]);
-
 
 app.controller('ContributeCtrl', ['$scope', '$http', '$location', function($scope, $http, $location) {
     $scope.data = {};

@@ -1,6 +1,5 @@
 {% extends "layout.html" %}
 {% block content %}
-<div ng:show="false">
 {% if posts %}
 {% for post in posts %}
 <article>
@@ -25,28 +24,4 @@
     </p>
 </div>
 {% endif %}
-</div>
-
-<div class="content" ng:show="!articles.length" ng-cloak>
-    <p class="quote">
-        The masses are in reality<br>
-        their own leaders,<br>
-        dialectically creating<br>
-        their own development<br>
-        process.
-    </p>
-</div>
-
-<div ng-cloak>
-    <article ng:repeat="article in articles">
-        <h1>
-            <a href="/{[ article.path ]}.html">{[ article.meta.title ]}</a>
-        </h1>
-
-        <small class="pull-right">Vom: {[ article.meta.date ]}</small>
-        <small>Von: {[ article.meta.author ]}</small>
-
-        <div ng:bind-html="article.html"></div>
-    </article>
-</div>
 {% endblock %}
