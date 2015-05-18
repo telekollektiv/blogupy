@@ -4,9 +4,9 @@
 {% if posts %}
 {% for post in posts %}
 <article>
-    <a href="{{ post.path[5:] }}.html">
-        <h1>{{ post.meta.title }}</h1>
-    </a>
+    <h1>
+        <a href="{{ post.path[5:] }}.html">{{ post.meta.title }}</a>
+    </h1>
 
     <small class="pull-right">Vom: {{ post.meta.date }}</small>
     <small>Von: {{ post.meta.author }}</small>
@@ -39,9 +39,9 @@
 
 <div ng-cloak>
     <article ng:repeat="article in articles">
-        <a href="/{[ article.path ]}.html">
-            <h1>{[ article.meta.title ]}</h1>
-        </a>
+        <h1>
+            <a href="/{[ article.path ]}.html">{[ article.meta.title ]}</a>
+        </h1>
 
         <small class="pull-right">Vom: {[ article.meta.date ]}</small>
         <small>Von: {[ article.meta.author ]}</small>
