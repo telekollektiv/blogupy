@@ -148,6 +148,11 @@ article a {
     text-decoration: none;
 }
 
+article h1 a:focus {
+    color: #280211;
+    text-decoration: none;
+}
+
 article a:hover {
     color: #c10800;
     text-decoration: none;
