@@ -108,6 +108,7 @@ def contribute():
             post['date'] = str(datetime.now())
             body = form.article.data.encode('utf8')
             output = yaml.dump(post, default_flow_style=False, allow_unicode=True) + '\n' + body
+            output = output.replace('!!python/str ', '')
 
             path = form.title.data.lower()
             path = re.sub('[^a-z0-9]', '_', path)
