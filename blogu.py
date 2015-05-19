@@ -103,14 +103,14 @@ def contribute():
                 return render_template('contribute.html', form=form)
         else:
             post = {}
-            post['title'] = str(form.title.data)
-            post['author'] = str(form.author.data) or 'Anonymous'
+            post['title'] = form.title.data.encode('utf8')
+            post['author'] = form.author.data.encode('utf8') or 'Anonymous'
             post['date'] = str(datetime.now())
-            body = str(form.article.data)
-            output = yaml.dump(post, default_flow_style=False) + '\n' + body
+            body = form.article.data.encode('utf8')
+            output = yaml.dump(post, default_flow_style=False, allow_unicode=True) + '\n' + body
 
-            path = str(form.title.data.lower())
-            path = re.sub('\W', '_', path)
+            path = form.title.data.lower()
+            path = re.sub('[^a-z0-9]', '_', path)
 
             with open('content/drafts/%s.md' % path, 'w') as f:
                 f.write(output)
