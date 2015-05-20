@@ -41,4 +41,7 @@ def ghettodown(txt):
 
             yield line
 
+        if P:
+            yield '</p>'
+
     return '\n'.join(swag(txt))
