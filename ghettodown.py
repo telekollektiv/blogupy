@@ -9,39 +9,39 @@ GHETTO_RULES = [
 
 def ghettodown(txt):
     def swag(txt):
-        FRESH = True
-        P = False
+        fresh = True
+        p = False
         for line in escape(txt).split('\n'):
             line = line.rstrip('\r')
             if line:
                 if line[0:2] == '# ':
-                    if P:
+                    if p:
                         yield '</p>'
                         P = False
                     line = re.sub('^# (.+)', '<h2>\\1</h2>', line)
                     line = re.sub('^## (.+)', '<h3>\\1</h3>', line)
-                    FRESH = True
+                    fresh = True
                 else:
-                    if FRESH:
-                        if not P:
+                    if fresh:
+                        if not p:
                             yield '<p>'
-                            FRESH = False
-                            P = True
+                            fresh = False
+                            p = True
                     else:
-                        if P:
+                        if p:
                             yield '<br>'
 
                     for x, y in GHETTO_RULES:
                         line = re.sub(x, y, line)
             else:
-                FRESH = True
-                if P:
+                fresh = True
+                if p:
                     yield '</p>'
-                    P = False
+                    p = False
 
             yield line
 
-        if P:
+        if p:
             yield '</p>'
 
     return '\n'.join(swag(txt))
