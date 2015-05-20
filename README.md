@@ -10,6 +10,7 @@ blogging for a better world of course :)
 ## How to install?
 1. clone it
 2. resolve the dependencies
+
 ### Requirements
 you need bower installed
 all reqirements are listet in the reqirements.txt file
