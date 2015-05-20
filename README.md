@@ -1,7 +1,7 @@
 Work in progress...
 
 ## About
-blogupy is a Python based Blog-System for the Basel (CH) based ATOPIE Art project.
+blogupy is a Python based Blog-System for the Basel (CH) based [ATOPIE](https://atopie.net) Art project.
 ## Why name it blogupy?
 because occupy+blog=blogu.py!
 ## What does it do?
