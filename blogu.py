@@ -156,8 +156,7 @@ def moderate_post_post(post):
             if os.path.exists('content/%s.md' % path):
                 break
         post = flatpages.get_or_404(path)
-        body = request.form['body']
-        print(repr(body))
+        body = request.form['body'].encode('utf8')
 
         diretory = post.path.split('/')[0]
         write_article(diretory, post.meta['title'], post.meta, body)
