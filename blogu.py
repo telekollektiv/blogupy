@@ -68,7 +68,7 @@ def write_article(diretory, title, article, body):
     output = output.replace('!!python/str ', '')
 
     path = re.sub('[^a-z0-9]', '_', title.lower())
-    with open('content/drafts/%s.md' % path, 'w') as f:
+    with open('content/%s/%s.md' % (diretory, path), 'w') as f:
         f.write(output)
 
 
