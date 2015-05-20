@@ -63,6 +63,14 @@ def get_articles(prefix=''):
     articles.sort(key=lambda item: item['meta']['date'], reverse=True)
     return articles
 
+def write_article(diretory, title, article, body):
+    output = yaml.dump(article, default_flow_style=False, allow_unicode=True) + '\n' + body
+    output = output.replace('!!python/str ', '')
+
+    path = re.sub('[^a-z0-9]', '_', title.lower())
+    with open('content/drafts/%s.md' % path, 'w') as f:
+        f.write(output)
+
 
 @app.route('/')
 def index():
@@ -107,15 +115,8 @@ def contribute():
             post['author'] = form.author.data.encode('utf8') or 'Anonymous'
             post['date'] = str(datetime.now())
             body = form.article.data.encode('utf8')
-            output = yaml.dump(post, default_flow_style=False, allow_unicode=True) + '\n' + body
-            output = output.replace('!!python/str ', '')
 
-            path = form.title.data.lower()
-            path = re.sub('[^a-z0-9]', '_', path)
-
-            with open('content/drafts/%s.md' % path, 'w') as f:
-                f.write(output)
-
+            write_article('drafts', form.title.data, post, body)
             notify('MAIL_RECV_MODERATE', 'Please unlock post: %s' % post['title'], '/moderate/')
 
             if request.query_string:
@@ -137,9 +138,31 @@ def moderate():
     return render_template('moderate.html', posts=articles)
 
 
+@app.route('/moderate/<name>')
+def moderate_post(name):
+    for postdir in [app.config['POST_DIR'], 'drafts']:  # TODO: don't hardcode drafts/
+        path = '{}/{}'.format(postdir, name)
+        if os.path.exists('content/%s.md' % path):
+            break
+    post = flatpages.get_or_404(path)
+    return render_template('moderate_article.html', post=post)
+
+
 @app.route('/moderate/<post>', methods=['POST'])
-def moderate_post(post):
-    if 'unlock' in request.form:
+def moderate_post_post(post):
+    if 'update' in request.form:
+        for postdir in [app.config['POST_DIR'], 'drafts']:  # TODO: don't hardcode drafts/
+            path = '{}/{}'.format(postdir, post)
+            if os.path.exists('content/%s.md' % path):
+                break
+        post = flatpages.get_or_404(path)
+        body = request.form['body']
+        print(repr(body))
+
+        diretory = post.path.split('/')[0]
+        write_article(diretory, post.meta['title'], post.meta, body)
+        notify('MAIL_RECV_MODERATE', 'Edited post: %s' % post['title'], 'It\'s 20% cooler now')
+    elif 'unlock' in request.form:
         shutil.move('content/drafts/%s.md' % post, 'content/posts/%s.md' % post)
         notify('MAIL_RECV_MODERATE', 'freigeschaltet: %s' % post, '/%s.html' % post)
     elif 'delete' in request.form:

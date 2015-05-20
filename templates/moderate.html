@@ -2,13 +2,14 @@
 {% block content %}
 <div class="content">
     {% for post in posts %}
+        {% set file = post.path.split('/')[-1] %}
         <div class="row">
-            <p>
-                <a href="#">{{ post.meta.title }}</a>
-            </p>
+            <h2>{{ post.meta.title }}</h2>
 
-            <form method="POST" action="/moderate/{{ post.path.split('/')[-1] }}">
-                <input type="submit" name="edit" value="editieren">
+            <form action="/moderate/{{ file }}">
+                <input type="submit" value="editieren">
+            </form>
+            <form method="POST" action="/moderate/{{ file }}">
                 {% if post.path.startswith('drafts/') %}
                     <input type="submit" name="unlock" value="freigeben">
                 {% endif %}
