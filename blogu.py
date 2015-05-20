@@ -167,7 +167,7 @@ def moderate_post_post(post):
     elif 'delete' in request.form:
         for path in ['content/drafts/%s.md', 'content/posts/%s.md']:
             if os.path.exists(path % post):
-                shutil.move('content/drafts/%s.md' % post, 'content/depublicate/%s.md' % post)
+                shutil.move(path % post, 'content/depublicate/%s.md' % post)
         notify('MAIL_RECV_MODERATE', 'geloescht: %s' % post, ':\'(')
     else:
         return 'invalid action'
