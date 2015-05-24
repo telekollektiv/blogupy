@@ -1,0 +1,44 @@
+{% extends "generic_contribute.html" %}
+{% block form %}
+    <h2>Mach mit!</h2>
+    <p>Werde Teil von Atopie.</p>
+    <p>Hier kannst du Texte und Gedanken mit Anderen teilen. Dein Beitrag wird auf diesem ATOPIE Blog veröffentlicht.</p>
+
+    <hr>
+
+    <h3>Und so gehts:</h3>
+    <p>* Im Feld "Author" kannst du einen Namen eingeben, ohne wird der Artikel als Anonymous veröffentlicht.</p>
+    <p>* Die Hauptüberschrift trägst du im Feld "Titel" ein.</p>
+    <p>* Unterüberschriften machst du mit "# Unterüberschrift" im Feld "Artikel".</p>
+    <p>* Zeilenumbrüche werden mit 1x Enter erreicht.</p>
+    <p>* Und Absätze mit 2x Enter.</p>
+    <p>Viel Spaß!</p>
+
+    <form action="/contribute/{{ section }}" method="post" ng:submit="submit($event)">
+        {{ form.hidden_tag() }}
+
+        {{ form.author.label }}
+        {{ form.author(placeholder='Anonymous', **{'ng-model': 'data.author'}) }}
+
+        {% for message in form.author.errors %}
+            <div class="flash">{{ message }}</div>
+        {% endfor %}
+
+        {{ form.title.label }}
+        {{ form.title(required='', **{'ng-model': 'data.title'}) }}
+
+        {% for message in form.title.errors %}
+            <div class="flash">{{ message }}</div>
+        {% endfor %}
+
+        {{ form.article.label }}
+        {{ form.article(rows=15, required='', **{'ng-model': 'data.article'}) }}
+
+        {% for message in form.article.errors %}
+            <div class="flash">{{ message }}</div>
+        {% endfor %}
+
+        {{ form.submit }}
+    </form>
+{% endblock %}
+

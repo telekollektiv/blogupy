@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content">
+    <ul class="list-inline text-center">
+        {% for x in ['blog', 'events'] %}
+            {% if x == section %}
+                <li>{{ x }}</li>
+            {% else %}
+                <li><a href="/contribute/{{ x }}">{{ x }}</a></li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+
+    {% if success %}
+        <h2>Danke für Deinen Beitrag!</h2>
+        <p>Dein Beitrag wird jetzt von der Redaktion geprüft und wenn alles in Ordnung ist veröffentlicht.</p>
+    {% else %}
+        {% block form %}
+        {% endblock %}
+    {% endif %}
+</div>
+{% endblock %}
+

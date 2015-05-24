@@ -3,9 +3,11 @@
 from flask import Flask, render_template, request, flash, redirect, jsonify
 from flask_flatpages import FlatPages
 from flask.ext.mail import Message, Mail
-from forms import ContactForm, ContributeForm
+from forms import ContactForm, BlogContributeForm, EventContributeForm
 from datetime import datetime
 from ghettodown import ghettodown
+from utils import write_article
+from contribute import receive_article, receive_event
 import shutil
 import yaml
 import sys
@@ -63,14 +65,6 @@ def get_articles(prefix=''):
     articles.sort(key=lambda item: item['meta']['date'], reverse=True)
     return articles
 
-def write_article(diretory, title, article, body):
-    output = yaml.dump(article, default_flow_style=False, allow_unicode=True) + '\n' + body
-    output = output.replace('!!python/str ', '')
-
-    path = re.sub('[^a-z0-9]', '_', title.lower())
-    with open('content/%s/%s.md' % (diretory, path), 'w') as f:
-        f.write(output)
-
 
 @app.route('/')
 def index():
@@ -94,13 +88,23 @@ def post(name):
 
 @app.route('/termine/')
 def events():
-    articles = get_articles(app.config['EVENT_DIR'])
+    events = get_articles(app.config['EVENT_DIR'])
     return render_template('events.html', events=events)
 
 
 @app.route('/contribute/', methods=['GET', 'POST'])
 def contribute():
-    form = ContributeForm()
+    return contribute_section('blog')
+
+
+@app.route('/contribute/<section>', methods=['GET', 'POST'])
+def contribute_section(section):
+    # TODO: sanitize section
+    if section == 'events':
+        form = EventContributeForm()
+    else:
+        form = BlogContributeForm()
+
     if request.method == 'POST':
         if not form.validate():
             if request.query_string:
@@ -108,23 +112,21 @@ def contribute():
                 resp.status_code = 400
                 return resp
             else:
-                return render_template('contribute.html', form=form)
+                return render_template('contribute/' + section + '.html', section=section, form=form)
         else:
-            post = {}
-            post['title'] = form.title.data.encode('utf8')
-            post['author'] = form.author.data.encode('utf8') or 'Anonymous'
-            post['date'] = str(datetime.now())
-            body = form.article.data.encode('utf8')
-
-            write_article('drafts', form.title.data, post, body)
-            notify('MAIL_RECV_MODERATE', 'Please unlock post: %s' % post['title'], '/moderate/')
+            if section == 'events':
+                post = receive_event(form)
+                notify('MAIL_RECV_MODERATE', 'Please unlock event: %s' % post['title'], '/moderate/')
+            else:
+                post = receive_article(form)
+                notify('MAIL_RECV_MODERATE', 'Please unlock post: %s' % post['title'], '/moderate/')
 
             if request.query_string:
                 return jsonify({'status': 'success'})
             else:
                 return redirect('/contribute/done')
     else:
-        return render_template('contribute.html', form=form)
+        return render_template('contribute/' + section + '.html', section=section, form=form)
 
 
 @app.route('/contribute/done')
@@ -140,7 +142,7 @@ def moderate():
 
 @app.route('/moderate/<name>')
 def moderate_post(name):
-    for postdir in [app.config['POST_DIR'], 'drafts']:  # TODO: don't hardcode drafts/
+    for postdir in [app.config['POST_DIR'], 'drafts/articles']:  # TODO: don't hardcode drafts/
         path = '{}/{}'.format(postdir, name)
         if os.path.exists('content/%s.md' % path):
             break
@@ -151,7 +153,7 @@ def moderate_post(name):
 @app.route('/moderate/<post>', methods=['POST'])
 def moderate_post_post(post):
     if 'update' in request.form:
-        for postdir in [app.config['POST_DIR'], 'drafts']:  # TODO: don't hardcode drafts/
+        for postdir in [app.config['POST_DIR'], 'drafts/articles']:  # TODO: don't hardcode drafts/
             path = '{}/{}'.format(postdir, post)
             if os.path.exists('content/%s.md' % path):
                 break
@@ -162,10 +164,10 @@ def moderate_post_post(post):
         write_article(diretory, post.meta['title'], post.meta, body)
         notify('MAIL_RECV_MODERATE', 'Edited post: %s' % post['title'], 'It\'s 20% cooler now')
     elif 'unlock' in request.form:
-        shutil.move('content/drafts/%s.md' % post, 'content/posts/%s.md' % post)
+        shutil.move('content/drafts/articles/%s.md' % post, 'content/posts/%s.md' % post)
         notify('MAIL_RECV_MODERATE', 'freigeschaltet: %s' % post, '/%s.html' % post)
     elif 'delete' in request.form:
-        for path in ['content/drafts/%s.md', 'content/posts/%s.md']:
+        for path in ['content/drafts/articles/%s.md', 'content/posts/%s.md']:
             if os.path.exists(path % post):
                 shutil.move(path % post, 'content/depublicate/%s.md' % post)
         notify('MAIL_RECV_MODERATE', 'geloescht: %s' % post, ':\'(')
