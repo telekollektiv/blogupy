@@ -92,6 +92,12 @@ def post(name):
     return render_template('post.html', post=post)
 
 
+@app.route('/termine/')
+def events():
+    articles = get_articles(app.config['EVENT_DIR'])
+    return render_template('events.html', events=events)
+
+
 @app.route('/contribute/', methods=['GET', 'POST'])
 def contribute():
     form = ContributeForm()

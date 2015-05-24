@@ -20,6 +20,7 @@ FLATPAGES_EXTENSION = '.md'
 FLATPAGES_ROOT = 'content'
 POST_DIR = 'posts'
 DRAFT_DIR = 'drafts'
+EVENT_DIR = 'events'
 
 # Mail Subject an content (keep the %s)
 
