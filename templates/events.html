@@ -4,10 +4,10 @@
 {% for event in events %}
 <article>
     <h1>
+        <small class="pull-right">{{ event.meta.date }} - {{ event.meta.stop }}</small>
         <a href="/termine/{{ event.path[7:] }}.html">{{ event.meta.title }}</a>
     </h1>
 
-    <small class="pull-right">Vom: {{ event.meta.date }}</small>
     <small>Veranstalter: {{ event.meta.author }}</small>
 
     {{ event.html|safe }}

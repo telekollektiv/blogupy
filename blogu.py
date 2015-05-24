@@ -140,36 +140,29 @@ def moderate():
     return render_template('moderate.html', posts=articles)
 
 
-@app.route('/moderate/<name>')
-def moderate_post(name):
-    for postdir in [app.config['POST_DIR'], 'drafts/articles']:  # TODO: don't hardcode drafts/
-        path = '{}/{}'.format(postdir, name)
-        if os.path.exists('content/%s.md' % path):
-            break
+@app.route('/moderate/<path:path>')
+def moderate_post(path):
     post = flatpages.get_or_404(path)
     return render_template('moderate_article.html', post=post)
 
 
-@app.route('/moderate/<post>', methods=['POST'])
-def moderate_post_post(post):
+@app.route('/moderate/<path:path>', methods=['POST'])
+def moderate_post_post(path):
+    # TODO: check path
     if 'update' in request.form:
-        for postdir in [app.config['POST_DIR'], 'drafts/articles']:  # TODO: don't hardcode drafts/
-            path = '{}/{}'.format(postdir, post)
-            if os.path.exists('content/%s.md' % path):
-                break
         post = flatpages.get_or_404(path)
         body = request.form['body'].encode('utf8')
 
-        diretory = post.path.split('/')[0]
-        write_article(diretory, post.meta['title'], post.meta, body)
+        diretory = path.split('/')[:-1]
+        write_article(directory, post.meta['title'], post.meta, body)
         notify('MAIL_RECV_MODERATE', 'Edited post: %s' % post['title'], 'It\'s 20% cooler now')
     elif 'unlock' in request.form:
+        post = path.split('/')[-1]  # TODO. improve
         shutil.move('content/drafts/articles/%s.md' % post, 'content/posts/%s.md' % post)
         notify('MAIL_RECV_MODERATE', 'freigeschaltet: %s' % post, '/%s.html' % post)
     elif 'delete' in request.form:
-        for path in ['content/drafts/articles/%s.md', 'content/posts/%s.md']:
-            if os.path.exists(path % post):
-                shutil.move(path % post, 'content/depublicate/%s.md' % post)
+        if os.path.exists('content/%s.md' % path):
+            shutil.move(path % post, 'content/depublicate/%s.md' % post)
         notify('MAIL_RECV_MODERATE', 'geloescht: %s' % post, ':\'(')
     else:
         return 'invalid action'
