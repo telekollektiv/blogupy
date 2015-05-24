@@ -78,12 +78,6 @@ def index():
     return render_template('index.html', posts=articles)
 
 
-@app.route('/index.json')
-def json_articles():
-    articles = get_articles(app.config['POST_DIR'])
-    return jsonify({'articles': articles})
-
-
 for url, template in app.config['CUSTOM_PAGES']:
     @app.route(url)
     def dynamic():
