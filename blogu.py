@@ -157,9 +157,9 @@ def moderate_post_post(path):
         write_article(directory, post.meta['title'], post.meta, body)
         notify('MAIL_RECV_MODERATE', 'Edited post: %s' % post['title'], 'It\'s 20% cooler now')
     elif 'unlock' in request.form:
-        post = path.split('/')[-1]  # TODO. improve
-        shutil.move('content/drafts/articles/%s.md' % post, 'content/posts/%s.md' % post)
-        notify('MAIL_RECV_MODERATE', 'freigeschaltet: %s' % post, '/%s.html' % post)
+        dest = path[len('drafts/'):]
+        shutil.move('content/%s.md' % path, 'content/%s.md' % dest)
+        notify('MAIL_RECV_MODERATE', 'freigeschaltet: %s' % dest, '/%s.html' % dest)
     elif 'delete' in request.form:
         if os.path.exists('content/%s.md' % path):
             shutil.move(path % post, 'content/depublicate/%s.md' % post)
