@@ -11,7 +11,7 @@ def receive_article(form):
     return post
 
 
-def receive_event(form):
+def _receive_event(form):
     event = {}
     event['title'] = form.title.data.encode('utf8')
     event['author'] = form.author.data.encode('utf8') or 'Anonymous'
@@ -20,5 +20,10 @@ def receive_event(form):
     event['stop'] = form.stop.data.encode('utf8')
     body = form.description.data.encode('utf8')
 
+    return event, body
+
+
+def receive_event(form):
+    event, body = _receive_event(form)
     write_article('drafts/events', form.title.data, event, body)
     return event

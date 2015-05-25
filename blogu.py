@@ -7,7 +7,7 @@ from forms import ContactForm, BlogContributeForm, EventContributeForm
 from datetime import datetime
 from ghettodown import ghettodown
 from utils import write_article
-from contribute import receive_article, receive_event
+from contribute import receive_article, receive_event, _receive_event
 import shutil
 import yaml
 import sys
@@ -143,7 +143,14 @@ def moderate():
 @app.route('/moderate/<path:path>')
 def moderate_post(path):
     post = flatpages.get_or_404(path)
-    return render_template('moderate_article.html', post=post)
+    if path.startswith('drafts/events/') or path.startswith('events/'):
+        prepopulate = post.meta
+        prepopulate['description'] = post.body
+        form = EventContributeForm(**prepopulate)
+        return render_template('moderate/events.html', form=form, post=post, path=path)
+    else:
+        form = BlogContributeForm()
+        return render_template('moderate_article.html', form=form, post=post, path=path)
 
 
 @app.route('/moderate/<path:path>', methods=['POST'])
@@ -151,11 +158,25 @@ def moderate_post_post(path):
     # TODO: check path
     if 'update' in request.form:
         post = flatpages.get_or_404(path)
-        body = request.form['body'].encode('utf8')
+        directory = '/'.join(path.split('/')[:-1])
 
-        diretory = path.split('/')[:-1]
-        write_article(directory, post.meta['title'], post.meta, body)
-        notify('MAIL_RECV_MODERATE', 'Edited post: %s' % post['title'], 'It\'s 20% cooler now')
+        if path.startswith('drafts/events/') or path.startswith('events/'):
+            prepopulate = post.meta
+            prepopulate['description'] = post.body
+            form = EventContributeForm(**prepopulate)
+
+            if not form.validate():
+                return render_template('moderate/events.html', form=form, post=post, path=path)
+
+            event, body = _receive_event(form)
+            write_article(directory, form.title.data, event, body)
+            notify('MAIL_RECV_MODERATE', 'Edited post: %s' % event['title'], 'It\'s 20% cooler now')
+        else:
+            form = BlogContributeForm(obj=post.meta)
+            body = request.form['body'].encode('utf8')
+
+            write_article(directory, post.meta['title'], post.meta, body)
+            notify('MAIL_RECV_MODERATE', 'Edited post: %s' % post['title'], 'It\'s 20% cooler now')
     elif 'unlock' in request.form:
         dest = path[len('drafts/'):]
         shutil.move('content/%s.md' % path, 'content/%s.md' % dest)
