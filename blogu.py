@@ -61,7 +61,16 @@ def prepare_article(article):
 
 
 def get_articles(prefix=''):
-    articles = [prepare_article(a) for a in flatpages if a.path.startswith(prefix)]
+    def f(a):
+        if not a.path.startswith(prefix):
+            return False
+
+        stop = a.meta.get('stop')
+        if stop and datetime.strptime(stop, '%Y-%m-%d %H:%M') < datetime.now():
+            return False
+
+        return True
+    articles = [prepare_article(a) for a in flatpages if f(a)]
     articles.sort(key=lambda item: item['meta']['date'], reverse=True)
     return articles
 
