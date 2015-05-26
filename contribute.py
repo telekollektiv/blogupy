@@ -16,8 +16,8 @@ def _receive_event(form):
     event['title'] = form.title.data.encode('utf8')
     event['author'] = form.author.data.encode('utf8') or 'Anonymous'
     event['location'] = form.location.data.encode('utf8')
-    event['date'] = form.date.data.encode('utf8')
-    event['stop'] = form.stop.data.encode('utf8')
+    event['date'] = form.date.data.strftime('%Y-%m-%d %H:%M')
+    event['stop'] = form.stop.data.strftime('%Y-%m-%d %H:%M')
     body = form.description.data.encode('utf8')
 
     return event, body

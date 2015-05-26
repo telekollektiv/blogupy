@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from flask.ext.wtf import Form
-from wtforms import (TextField, TextAreaField, SubmitField,
+from wtforms import (TextField, TextAreaField, DateTimeField, SubmitField,
                      validators, ValidationError)
 
 
@@ -31,7 +31,7 @@ class EventContributeForm(Form):
     title = TextField('Titel', [validators.Required('required')])
     author = TextField('Wer')
     location = TextField('Wo', [validators.Required('required')])
-    date = TextField('Wann', [validators.Required('required')])
-    stop = TextField('Bis', [validators.Required('required')])
+    date = DateTimeField('Wann', [validators.Required('required')], format='%Y-%m-%d %H:%M')
+    stop = DateTimeField('Bis', [validators.Required('required')], format='%Y-%m-%d %H:%M')
     description = TextAreaField('Beschreibung', [validators.Required('required')])
     submit = SubmitField('Senden')

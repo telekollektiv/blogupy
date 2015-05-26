@@ -16,11 +16,13 @@
             <div class="col-md-6">
                 {{ form.date.label }}
                 {{ form.date(**{'ng-model': 'data.date'}) }}
+                <p><small>Jahr-Monat-Tag Stunde:Minute</small></p>
             </div>
 
             <div class="col-md-6">
                 {{ form.stop.label }}
                 {{ form.stop(**{'ng-model': 'data.stop'}) }}
+                <p><small>Jahr-Monat-Tag Stunde:Minute</small></p>
             </div>
         </div>
 
