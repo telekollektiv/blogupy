@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+{% if events %}
+{% for event in events %}
+<article>
+    <h1>
+        <small class="pull-right">{{ event.meta.date }} - {{ event.meta.stop }}</small>
+        <a href="/termine/{{ event.path[7:] }}.html">{{ event.meta.title }}</a>
+    </h1>
+
+    <small>Veranstalter: {{ event.meta.author }}</small>
+
+    {{ event.html|safe }}
+</article>
+{% endfor %}
+{% else %}
+<div class="content">
+    <p class="quote">
+        The masses are in reality<br>
+        their own leaders,<br>
+        dialectically creating<br>
+        their own development<br>
+        process.
+    </p>
+</div>
+{% endif %}
+{% endblock %}

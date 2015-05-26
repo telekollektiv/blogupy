@@ -1,0 +1,37 @@
+{% extends "generic_moderate.html" %}
+{% block moderate %}
+    <small class="pull-right">{{ post.date }} - {{ post.stop }}</small>
+    <small>Von: {{ post.author }}</small>
+
+    {{ post.html|safe }}
+
+    <form action="/moderate/{{ path }}" method="post" ng:submit="submit($event)">
+        {{ form.hidden_tag() }}
+
+        {{ form.title.label }}
+        {{ form.title }}
+
+        {{ form.author.label }}
+        {{ form.author(placeholder='Anonymous') }}
+
+        {{ form.location.label }}
+        {{ form.location }}
+
+        <div class="row">
+            <div class="col-md-6">
+                {{ form.date.label }}
+                {{ form.date }}
+            </div>
+
+            <div class="col-md-6">
+                {{ form.stop.label }}
+                {{ form.stop }}
+            </div>
+        </div>
+
+        {{ form.description.label }}
+        {{ form.description(rows=7, required='') }}
+
+        <input type="submit" name="update" value="&#9398;ktualisieren">
+    </form>
+{% endblock %}

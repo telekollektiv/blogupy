@@ -2,9 +2,9 @@
 {% block content %}
 <div class="content">
     {% for post in posts %}
-        {% set file = post.path.split('/')[-1] %}
+        {% set file = post.path %}
         <div class="row">
-            <h2>{{ post.meta.title }}</h2>
+            <h2>{{ '/'.join(post.path.split('/')[:-1]) }}/ {{ post.meta.title }}</h2>
 
             <form action="/moderate/{{ file }}">
                 <input type="submit" value="Vorschau / editieren">

@@ -3,9 +3,11 @@
 from flask import Flask, render_template, request, flash, redirect, jsonify
 from flask_flatpages import FlatPages
 from flask.ext.mail import Message, Mail
-from forms import ContactForm, ContributeForm
+from forms import ContactForm, BlogContributeForm, EventContributeForm
 from datetime import datetime
 from ghettodown import ghettodown
+from utils import write_article
+from contribute import receive_article, receive_event, _receive_event
 import shutil
 import yaml
 import sys
@@ -63,14 +65,6 @@ def get_articles(prefix=''):
     articles.sort(key=lambda item: item['meta']['date'], reverse=True)
     return articles
 
-def write_article(diretory, title, article, body):
-    output = yaml.dump(article, default_flow_style=False, allow_unicode=True) + '\n' + body
-    output = output.replace('!!python/str ', '')
-
-    path = re.sub('[^a-z0-9]', '_', title.lower())
-    with open('content/%s/%s.md' % (diretory, path), 'w') as f:
-        f.write(output)
-
 
 @app.route('/')
 def index():
@@ -92,9 +86,25 @@ def post(name):
     return render_template('post.html', post=post)
 
 
+@app.route('/termine/')
+def events():
+    events = get_articles(app.config['EVENT_DIR'])
+    return render_template('events.html', events=events)
+
+
 @app.route('/contribute/', methods=['GET', 'POST'])
 def contribute():
-    form = ContributeForm()
+    return contribute_section('blog')
+
+
+@app.route('/contribute/<section>', methods=['GET', 'POST'])
+def contribute_section(section):
+    # TODO: sanitize section
+    if section == 'events':
+        form = EventContributeForm()
+    else:
+        form = BlogContributeForm()
+
     if request.method == 'POST':
         if not form.validate():
             if request.query_string:
@@ -102,23 +112,21 @@ def contribute():
                 resp.status_code = 400
                 return resp
             else:
-                return render_template('contribute.html', form=form)
+                return render_template('contribute/' + section + '.html', section=section, form=form)
         else:
-            post = {}
-            post['title'] = form.title.data.encode('utf8')
-            post['author'] = form.author.data.encode('utf8') or 'Anonymous'
-            post['date'] = str(datetime.now())
-            body = form.article.data.encode('utf8')
-
-            write_article('drafts', form.title.data, post, body)
-            notify('MAIL_RECV_MODERATE', 'Please unlock post: %s' % post['title'], '/moderate/')
+            if section == 'events':
+                post = receive_event(form)
+                notify('MAIL_RECV_MODERATE', 'Please unlock event: %s' % post['title'], '/moderate/')
+            else:
+                post = receive_article(form)
+                notify('MAIL_RECV_MODERATE', 'Please unlock post: %s' % post['title'], '/moderate/')
 
             if request.query_string:
                 return jsonify({'status': 'success'})
             else:
                 return redirect('/contribute/done')
     else:
-        return render_template('contribute.html', form=form)
+        return render_template('contribute/' + section + '.html', section=section, form=form)
 
 
 @app.route('/contribute/done')
@@ -132,36 +140,50 @@ def moderate():
     return render_template('moderate.html', posts=articles)
 
 
-@app.route('/moderate/<name>')
-def moderate_post(name):
-    for postdir in [app.config['POST_DIR'], 'drafts']:  # TODO: don't hardcode drafts/
-        path = '{}/{}'.format(postdir, name)
-        if os.path.exists('content/%s.md' % path):
-            break
+@app.route('/moderate/<path:path>')
+def moderate_post(path):
     post = flatpages.get_or_404(path)
-    return render_template('moderate_article.html', post=post)
+    if path.startswith('drafts/events/') or path.startswith('events/'):
+        prepopulate = post.meta
+        prepopulate['description'] = post.body
+        form = EventContributeForm(**prepopulate)
+        return render_template('moderate/events.html', form=form, post=post, path=path)
+    else:
+        form = BlogContributeForm()
+        return render_template('moderate_article.html', form=form, post=post, path=path)
 
 
-@app.route('/moderate/<post>', methods=['POST'])
-def moderate_post_post(post):
+@app.route('/moderate/<path:path>', methods=['POST'])
+def moderate_post_post(path):
+    # TODO: check path
     if 'update' in request.form:
-        for postdir in [app.config['POST_DIR'], 'drafts']:  # TODO: don't hardcode drafts/
-            path = '{}/{}'.format(postdir, post)
-            if os.path.exists('content/%s.md' % path):
-                break
         post = flatpages.get_or_404(path)
-        body = request.form['body'].encode('utf8')
+        directory = '/'.join(path.split('/')[:-1])
 
-        diretory = post.path.split('/')[0]
-        write_article(diretory, post.meta['title'], post.meta, body)
-        notify('MAIL_RECV_MODERATE', 'Edited post: %s' % post['title'], 'It\'s 20% cooler now')
+        if path.startswith('drafts/events/') or path.startswith('events/'):
+            prepopulate = post.meta
+            prepopulate['description'] = post.body
+            form = EventContributeForm(**prepopulate)
+
+            if not form.validate():
+                return render_template('moderate/events.html', form=form, post=post, path=path)
+
+            event, body = _receive_event(form)
+            write_article(directory, form.title.data, event, body)
+            notify('MAIL_RECV_MODERATE', 'Edited post: %s' % event['title'], 'It\'s 20% cooler now')
+        else:
+            form = BlogContributeForm(obj=post.meta)
+            body = request.form['body'].encode('utf8')
+
+            write_article(directory, post.meta['title'], post.meta, body)
+            notify('MAIL_RECV_MODERATE', 'Edited post: %s' % post['title'], 'It\'s 20% cooler now')
     elif 'unlock' in request.form:
-        shutil.move('content/drafts/%s.md' % post, 'content/posts/%s.md' % post)
-        notify('MAIL_RECV_MODERATE', 'freigeschaltet: %s' % post, '/%s.html' % post)
+        dest = path[len('drafts/'):]
+        shutil.move('content/%s.md' % path, 'content/%s.md' % dest)
+        notify('MAIL_RECV_MODERATE', 'freigeschaltet: %s' % dest, '/%s.html' % dest)
     elif 'delete' in request.form:
-        for path in ['content/drafts/%s.md', 'content/posts/%s.md']:
-            if os.path.exists(path % post):
-                shutil.move(path % post, 'content/depublicate/%s.md' % post)
+        if os.path.exists('content/%s.md' % path):
+            shutil.move(path % post, 'content/depublicate/%s.md' % post)
         notify('MAIL_RECV_MODERATE', 'geloescht: %s' % post, ':\'(')
     else:
         return 'invalid action'

@@ -1,0 +1,33 @@
+{% extends "generic_contribute.html" %}
+{% block form %}
+    <form action="/contribute/{{ section }}" method="post" ng:submit="submit($event)">
+        {{ form.hidden_tag() }}
+
+        {{ form.title.label }}
+        {{ form.title(**{'ng-model': 'data.title'}) }}
+
+        {{ form.author.label }}
+        {{ form.author(placeholder='Anonymous') }}
+
+        {{ form.location.label }}
+        {{ form.location(**{'ng-model': 'data.location'}) }}
+
+        <div class="row">
+            <div class="col-md-6">
+                {{ form.date.label }}
+                {{ form.date(**{'ng-model': 'data.date'}) }}
+            </div>
+
+            <div class="col-md-6">
+                {{ form.stop.label }}
+                {{ form.stop(**{'ng-model': 'data.stop'}) }}
+            </div>
+        </div>
+
+        {{ form.description.label }}
+        {{ form.description(**{'ng-model': 'data.description'}) }}
+
+        {{ form.submit }}
+    </form>
+{% endblock %}
+
