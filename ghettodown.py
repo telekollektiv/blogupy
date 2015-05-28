@@ -19,7 +19,7 @@ def ghettodown(txt):
                 if line[0:2] == '# ':
                     if p:
                         yield '</p>'
-                        P = False
+                        p = False
                     line = re.sub('^# (.+)', '<h2>\\1</h2>', line)
                     line = re.sub('^## (.+)', '<h3>\\1</h3>', line)
                     fresh = True
