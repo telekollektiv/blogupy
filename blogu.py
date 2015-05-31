@@ -191,9 +191,10 @@ def moderate_post_post(path):
         shutil.move('content/%s.md' % path, 'content/%s.md' % dest)
         notify('MAIL_RECV_MODERATE', 'freigeschaltet: %s' % dest, '/%s.html' % dest)
     elif 'delete' in request.form:
-        if os.path.exists('content/%s.md' % path):
-            shutil.move(path % post, 'content/depublicate/%s.md' % post)
-        notify('MAIL_RECV_MODERATE', 'geloescht: %s' % post, ':\'(')
+        src = 'content/%s.md' % path
+        if os.path.exists(src):
+            shutil.move(src, 'content/depublicate/%s.md' % path)
+        notify('MAIL_RECV_MODERATE', 'geloescht: %s' % path, ':\'(')
     else:
         return 'invalid action'
     return redirect('/moderate/')
