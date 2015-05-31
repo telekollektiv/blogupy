@@ -20,11 +20,13 @@ class ContactForm(Form):
 # äöü ÄÖÜ
 
 # Contribute Form
-class BlogContributeForm(Form):
+class ArticleContributeForm(Form):
     author = TextField("Author")
+    date = DateTimeField('Datum', [validators.Required('required')], format='%Y-%m-%d %H:%M')
     title = TextField("Titel", [validators.Required("Bitte gib einen Titel an!")])
-    article = TextAreaField("Artikel", [validators.Required("Bitte schreibe einen Artikel")])
+    content = TextAreaField("Artikel", [validators.Required("Bitte schreibe einen Artikel")])
     submit = SubmitField("Senden")
+BlogContributeForm = ArticleContributeForm
 
 
 class EventContributeForm(Form):
@@ -33,5 +35,5 @@ class EventContributeForm(Form):
     location = TextField('Wo', [validators.Required('required')])
     date = DateTimeField('Wann', [validators.Required('required')], format='%Y-%m-%d %H:%M')
     stop = DateTimeField('Bis', [validators.Required('required')], format='%Y-%m-%d %H:%M')
-    description = TextAreaField('Beschreibung', [validators.Required('required')])
+    content = TextAreaField('Beschreibung', [validators.Required('required')])
     submit = SubmitField('Senden')

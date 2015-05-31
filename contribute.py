@@ -1,14 +1,21 @@
-from utils import write_article
+from utils import write_article, strptime, strftime
+from datetime import datetime
+
+
+def _receive_article(form):
+    article = {}
+    article['title'] = form.title.data.encode('utf8')
+    article['author'] = form.author.data.encode('utf8') or 'Anonymous'
+    article['date'] = strftime(datetime.now())
+    body = form.content.data.encode('utf8')
+
+    return article, body
+
 
 def receive_article(form):
-    post = {}
-    post['title'] = form.title.data.encode('utf8')
-    post['author'] = form.author.data.encode('utf8') or 'Anonymous'
-    post['date'] = str(datetime.now())
-    body = form.article.data.encode('utf8')
-
-    write_article('drafts/articles', form.title.data, post, body)
-    return post
+    article, body = _receive_article(form)
+    write_article('drafts/articles', form.title.data, article, body)
+    return article
 
 
 def _receive_event(form):
@@ -16,9 +23,9 @@ def _receive_event(form):
     event['title'] = form.title.data.encode('utf8')
     event['author'] = form.author.data.encode('utf8') or 'Anonymous'
     event['location'] = form.location.data.encode('utf8')
-    event['date'] = form.date.data.strftime('%Y-%m-%d %H:%M')
-    event['stop'] = form.stop.data.strftime('%Y-%m-%d %H:%M')
-    body = form.description.data.encode('utf8')
+    event['date'] = strftime(form.date.data)
+    event['stop'] = strftime(form.stop.data)
+    body = form.content.data.encode('utf8')
 
     return event, body
 

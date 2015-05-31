@@ -1,6 +1,6 @@
 {% extends "generic_moderate.html" %}
 {% block moderate %}
-    <small class="pull-right">{{ post.date }} - {{ post.stop }}</small>
+    <small class="pull-right">Vom: {{ post.date }}</small>
     <small>Von: {{ post.author }}</small>
 
     {{ post.html|safe }}
@@ -14,23 +14,11 @@
         {{ form.author.label }}
         {{ form.author(placeholder='Anonymous') }}
 
-        {{ form.location.label }}
-        {{ form.location }}
-
-        <div class="row">
-            <div class="col-md-6">
-                {{ form.date.label }}
-                {{ form.date }}
-            </div>
-
-            <div class="col-md-6">
-                {{ form.stop.label }}
-                {{ form.stop }}
-            </div>
-        </div>
+        {{ form.date.label }}
+        {{ form.date }}
 
         {{ form.content.label }}
-        {{ form.content(rows=7, required='') }}
+        {{ form.content(rows=15, required='') }}
 
         <input type="submit" name="update" value="&#9398;ktualisieren">
     </form>

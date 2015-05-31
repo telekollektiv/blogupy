@@ -6,9 +6,10 @@ from flask.ext.mail import Message, Mail
 from forms import ContactForm, BlogContributeForm, EventContributeForm
 from datetime import datetime
 from ghettodown import ghettodown
-from utils import write_article
-from contribute import receive_article, receive_event, _receive_event
+from utils import write_article, get_section, freeze_meta, unfreeze_meta, strptime
+from contribute import receive_article, _receive_article, receive_event, _receive_event
 import shutil
+import logic
 import yaml
 import sys
 import os
@@ -56,7 +57,6 @@ def prepare_article(article):
         'path': article.path,
         'html': article.html
     }
-    article['meta']['date'] = article['meta']['date'][:19]
     return article
 
 
@@ -66,7 +66,7 @@ def get_articles(prefix=''):
             return False
 
         stop = a.meta.get('stop')
-        if stop and datetime.strptime(stop, '%Y-%m-%d %H:%M') < datetime.now():
+        if stop and strptime(stop) < datetime.now():
             return False
 
         return True
@@ -77,7 +77,7 @@ def get_articles(prefix=''):
 
 @app.route('/')
 def index():
-    articles = get_articles(app.config['POST_DIR'])
+    articles = get_articles('articles/')
     return render_template('index.html', posts=articles)
 
 
@@ -89,15 +89,13 @@ for url, template in app.config['CUSTOM_PAGES']:
 
 @app.route('/<name>.html')
 def post(name):
-    postdir = app.config['POST_DIR']
-    path = '{}/{}'.format(postdir, name)
-    post = flatpages.get_or_404(path)
-    return render_template('post.html', post=post)
+    post = flatpages.get_or_404('articles/' + name)
+    return render_template('article.html', post=post)
 
 
 @app.route('/termine/')
 def events():
-    events = get_articles(app.config['EVENT_DIR'])
+    events = get_articles('events/')
     return render_template('events.html', events=events)
 
 
@@ -108,11 +106,7 @@ def contribute():
 
 @app.route('/contribute/<section>', methods=['GET', 'POST'])
 def contribute_section(section):
-    # TODO: sanitize section
-    if section == 'events':
-        form = EventContributeForm()
-    else:
-        form = BlogContributeForm()
+    form = logic.sections[section]['form'](**prepopulate)
 
     if request.method == 'POST':
         if not form.validate():
@@ -128,7 +122,7 @@ def contribute_section(section):
                 notify('MAIL_RECV_MODERATE', 'Please unlock event: %s' % post['title'], '/moderate/')
             else:
                 post = receive_article(form)
-                notify('MAIL_RECV_MODERATE', 'Please unlock post: %s' % post['title'], '/moderate/')
+                notify('MAIL_RECV_MODERATE', 'Please unlock article: %s' % post['title'], '/moderate/')
 
             if request.query_string:
                 return jsonify({'status': 'success'})
@@ -149,46 +143,44 @@ def moderate():
     return render_template('moderate.html', posts=articles)
 
 
-@app.route('/moderate/<path:path>')
-def moderate_post(path):
+def load_content_for_moderation(path):
     if '..' in path:
         return ''
-    post = flatpages.get_or_404(path)
-    if path.startswith('drafts/events/') or path.startswith('events/'):
-        prepopulate = post.meta
-        prepopulate['description'] = post.body
-        form = EventContributeForm(**prepopulate)
-        return render_template('moderate/events.html', form=form, post=post, path=path)
-    else:
-        form = BlogContributeForm()
-        return render_template('moderate_article.html', form=form, post=post, path=path)
+    section = get_section(path)
+    content = flatpages.get_or_404(path)
+    prepopulate = unfreeze_meta(dict(content.meta))
+    prepopulate['content'] = content.body
+
+    form = logic.sections[section]['form'](**prepopulate)
+
+    return section, content, form
+
+
+@app.route('/moderate/<path:path>')
+def moderate_content(path):
+    section, content, form = load_content_for_moderation(path)
+    return render_template('moderate/' + section + '.html', form=form, post=content, path=path)
 
 
 @app.route('/moderate/<path:path>', methods=['POST'])
 def moderate_post_post(path):
-    if '..' in path:
-        return ''
+    section, content, form = load_content_for_moderation(path)
+    post = content
+
     if 'update' in request.form:
-        post = flatpages.get_or_404(path)
+        if not form.validate():
+            return moderate_content(path)
+
         directory = '/'.join(path.split('/')[:-1])
 
-        if path.startswith('drafts/events/') or path.startswith('events/'):
-            prepopulate = post.meta
-            prepopulate['description'] = post.body
-            form = EventContributeForm(**prepopulate)
-
-            if not form.validate():
-                return render_template('moderate/events.html', form=form, post=post, path=path)
-
+        if section == 'events':
             event, body = _receive_event(form)
             write_article(directory, form.title.data, event, body)
-            notify('MAIL_RECV_MODERATE', 'Edited post: %s' % event['title'], 'It\'s 20% cooler now')
+            notify('MAIL_RECV_MODERATE', 'Edited event: %s' % event['title'], 'It\'s 20% cooler now')
         else:
-            form = BlogContributeForm(obj=post.meta)
-            body = request.form['body'].encode('utf8')
-
-            write_article(directory, post.meta['title'], post.meta, body)
-            notify('MAIL_RECV_MODERATE', 'Edited post: %s' % post['title'], 'It\'s 20% cooler now')
+            article, body = _receive_article(form)
+            write_article(directory, form.title.data, article, body)
+            notify('MAIL_RECV_MODERATE', 'Edited article: %s' % post['title'], 'It\'s 20% cooler now')
     elif 'unlock' in request.form:
         dest = path[len('drafts/'):]
         shutil.move('content/%s.md' % path, 'content/%s.md' % dest)
@@ -211,10 +203,7 @@ def kontakt():
             return render_template('kontakt.html', form=form)
         else:
             subject = form.subject.data
-            body = """
-            From: %s <%s>
-            %s
-            """ % (form.name.data, form.email.data, form.message.data)
+            body = 'From: %s <%s>\n\n%s' % (form.name.data, form.email.data, form.message.data)
             notify('MAIL_RECV_CONTACT', subject, body)
             return redirect('/kontakt/done')
     elif request.method == 'GET':
