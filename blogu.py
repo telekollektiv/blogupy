@@ -151,6 +151,8 @@ def moderate():
 
 @app.route('/moderate/<path:path>')
 def moderate_post(path):
+    if '..' in path:
+        return ''
     post = flatpages.get_or_404(path)
     if path.startswith('drafts/events/') or path.startswith('events/'):
         prepopulate = post.meta
@@ -164,7 +166,8 @@ def moderate_post(path):
 
 @app.route('/moderate/<path:path>', methods=['POST'])
 def moderate_post_post(path):
-    # TODO: check path
+    if '..' in path:
+        return ''
     if 'update' in request.form:
         post = flatpages.get_or_404(path)
         directory = '/'.join(path.split('/')[:-1])
