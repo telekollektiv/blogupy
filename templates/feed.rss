@@ -10,8 +10,8 @@
       <item>
         <title>{{ item.meta.title }}</title>
         <description>{{ item.html }}</description>
-        <link>https://atopie.net/{{ post.path[6:] }}.html</link>
-        <guid isPermaLink="true">https://atopie.net/{{ post.path[6:] }}.html</guid>
+        <link>https://atopie.net/{{ item.path[6:] }}.html</link>
+        <guid isPermaLink="true">https://atopie.net/{{ item.path[6:] }}.html</guid>
       </item>
     {% endfor %}
   </channel>
