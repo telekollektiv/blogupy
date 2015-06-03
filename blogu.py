@@ -81,6 +81,12 @@ def index():
     return render_template('index.html', posts=articles)
 
 
+@app.route('/index.rss')
+def rss():
+    items = get_articles()
+    return render_template('feed.rss', items=items)
+
+
 for url, template in app.config['CUSTOM_PAGES']:
     @app.route(url)
     def dynamic():
