@@ -81,6 +81,12 @@ def index():
     return render_template('index.html', posts=articles)
 
 
+@app.route('/feed')
+def rss():
+    items = get_articles()
+    return render_template('feed.xml', items=items), 200, {'Content-Type': 'application/rss+xml'}
+
+
 for url, template in app.config['CUSTOM_PAGES']:
     @app.route(url)
     def dynamic():

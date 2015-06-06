@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Atopie</title>
+    <description>Blogupy RSS Feed</description>
+    <link>https://atopie.net/</link>
+    <atom:link href="/index.rss" rel="self" type="application/rss+xml" />
+    <generator>Blogupy</generator>
+    {% for item in items %}
+      <item>
+        <title>{{ item.meta.title }}</title>
+        <description>{{ item.html }}</description>
+        <link>https://atopie.net/{{ item.path[7:] }}.html</link>
+        <guid isPermaLink="true">https://atopie.net/{{ item.path[7:] }}.html</guid>
+      </item>
+    {% endfor %}
+  </channel>
+</rss>
