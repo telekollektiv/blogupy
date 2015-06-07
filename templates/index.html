@@ -13,6 +13,21 @@
     {{ post.html|safe }}
 </article>
 {% endfor %}
+<div class="content">
+{% if page > 1 %}
+<a href="/articles/{{ page-1 }}">&lt;</a>
+{% endif %}
+{% for p in pages %}
+{% if p == page %}
+{{ p }}
+{% else %}
+<a href="/articles/{{ p }}">{{ p }}</a>
+{% endif %}
+{% endfor %}
+{% if page < pages[-1] %}
+<a href="/articles/{{ page+1 }}">&gt;</a>
+{% endif %}
+</div>
 {% else %}
 <div class="content">
     <p class="quote">
