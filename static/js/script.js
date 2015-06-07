@@ -1,5 +1,9 @@
 var app = angular.module('app', ['ngRoute', 'angular-loading-bar']);
 
+var breakouts = [
+    'feed'
+];
+
 app.config(['$interpolateProvider', function($interpolateProvider) {
     $interpolateProvider.startSymbol('{[');
     $interpolateProvider.endSymbol(']}');
@@ -79,5 +83,11 @@ app.controller('EventContributeCtrl', ['$scope', '$http', '$location', function(
 }]);
 
 app.controller('CatchAllCtrl', ['$routeParams', '$scope', function($routeParams, $scope) {
-    $scope.templatePath = $routeParams.template + '?ng';
+    var route = $routeParams.template;
+
+    if(~breakouts.indexOf(route)) {
+        location.reload();
+    } else {
+        $scope.templatePath = route + '?ng';
+    }
 }]);
