@@ -58,16 +58,16 @@ header h1 {
     color: #c10800;
 }
 
-header h1 a {
+header a {
     color: #280211;
 }
 
-header h1 a:hover {
+header a:hover {
     color: #c10800;
     text-decoration: none;
 }
 
-header h1 a:focus {
+header a:focus {
     color: #280211;
     text-decoration: none;
 }

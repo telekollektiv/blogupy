@@ -9,6 +9,7 @@
         <link rel='stylesheet' href="/static/css/loading-bar.min.css">
         <link rel="stylesheet" href="/static/css/main.css">
         <link rel="icon" type="image/png" href="/static/img/favicon.png">
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed">
         <base href="/">
         <script src="/static/js/angular.min.js"></script>
         <script src="/static/js/angular-route.min.js"></script>
@@ -21,6 +22,9 @@
     <body>
         <div class="container" ng-controller="AtopieCtrl">
             <header>
+                <ul class="text-right list-inline">
+                    <li><a href="/feed" target="_blank">RSS</a></li>
+                </ul>
                 <h1 class="first-red">
                     <a href="/">Atopie</a>
                 </h1>
