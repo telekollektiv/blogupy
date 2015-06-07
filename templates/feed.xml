@@ -10,8 +10,13 @@
       <item>
         <title>{{ item.meta.title }}</title>
         <description>{{ item.html }}</description>
-        <link>https://atopie.net/{{ item.path[7:] }}.html</link>
-        <guid isPermaLink="true">https://atopie.net/{{ item.path[7:] }}.html</guid>
+        {% if 'events' in item.path %}
+        <link>https://atopie.net/{{ item.path }}.html</link>
+        <guid isPermaLink="true">https://atopie.net/{{ item.path }}.html</guid>
+        {% else %}
+        <link>https://atopie.net/{{ item.path[6:] }}.html</link>
+        <guid isPermaLink="true">https://atopie.net/{{ item.path[6:] }}.html</guid>
+        {% endif %}
       </item>
     {% endfor %}
   </channel>

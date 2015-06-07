@@ -83,7 +83,9 @@ def index():
 
 @app.route('/feed')
 def rss():
-    items = get_articles()
+    items = get_articles(app.config['POST_DIR'])
+    items += get_articles(app.config['EVENT_DIR'])
+    items.sort(key=lambda item: item['meta']['date'], reverse=True)
     return render_template('feed.xml', items=items), 200, {'Content-Type': 'application/rss+xml'}
 
 
