@@ -23,6 +23,16 @@ body {
     font-family: 'Cella', sans-serif;
 }
 
+a, a:focus {
+    color: #280211;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #c10800;
+    text-decoration: none;
+}
+
 .container {
     min-width: 300px;
     max-width: 800px;
