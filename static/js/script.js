@@ -4,9 +4,20 @@ var breakouts = [
     'feed'
 ];
 
+var random = function(len) {
+    var ret = '';
+
+
+    while(ret.length < len) {
+        ret += Math.random().toString(36).replace(/[^a-z]/ig, '');
+    }
+
+    return ret.substr(0, len);
+};
+
 app.config(['$interpolateProvider', function($interpolateProvider) {
-    $interpolateProvider.startSymbol('');
-    $interpolateProvider.endSymbol('');
+    $interpolateProvider.startSymbol(random(128));
+    $interpolateProvider.endSymbol(random(128));
 }]);
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
