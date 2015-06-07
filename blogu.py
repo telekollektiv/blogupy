@@ -90,6 +90,15 @@ def index(section, page):
         return render_template('events.html', events=events)
 
 
+@app.route('/<name>.html', defaults={'section': '_articles'})
+@app.route('/<section>/<name>.html')
+def item(section, name):
+    if section == '_articles':
+        return redirect('/articles/%s.html' % name)
+    item = flatpages.get_or_404('%s/%s' % (section, name))
+    return render_template('post.html', post=item)
+
+
 @app.route('/feed')
 def rss():
     items = get_articles(app.config['POST_DIR'])
@@ -102,14 +111,6 @@ for url, template in app.config['CUSTOM_PAGES']:
     @app.route(url)
     def dynamic():
         return render_template(template)
-
-
-@app.route('/<name>.html')
-def post(name):
-    postdir = app.config['POST_DIR']
-    path = '{}/{}'.format(postdir, name)
-    post = flatpages.get_or_404(path)
-    return render_template('post.html', post=post)
 
 
 @app.route('/contribute/', methods=['GET', 'POST'])
