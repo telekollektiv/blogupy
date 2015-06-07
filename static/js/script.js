@@ -4,11 +4,6 @@ var breakouts = [
     'feed'
 ];
 
-app.config(['$interpolateProvider', function($interpolateProvider) {
-    $interpolateProvider.startSymbol('{[');
-    $interpolateProvider.endSymbol(']}');
-}]);
-
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
     $routeProvider
@@ -27,14 +22,6 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
             template: '<ng-include src="templatePath"></ng-include>',
             controller: 'CatchAllCtrl'
         })
-}]);
-
-app.factory('articleService', ['$http', function($http) {
-    return {
-        get: function() {
-            return $http.get('/index.json');
-        }
-    };
 }]);
 
 app.controller('AtopieCtrl', ['$rootScope', '$scope', function($rootScope, $scope) {
