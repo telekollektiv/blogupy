@@ -1,5 +1,11 @@
+import math
 import yaml
 import re
+
+
+def get_pages(total, limit):
+    print((total, limit))
+    return range(1, int(math.ceil(float(total) / limit)) + 1)
 
 
 def write_article(diretory, title, article, body):

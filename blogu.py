@@ -6,7 +6,7 @@ from flask.ext.mail import Message, Mail
 from forms import ContactForm, BlogContributeForm, EventContributeForm
 from datetime import datetime
 from ghettodown import ghettodown
-from utils import write_article
+from utils import write_article, get_pages
 from contribute import receive_article, receive_event, _receive_event
 import shutil
 import yaml
@@ -77,8 +77,16 @@ def get_articles(prefix=''):
 
 @app.route('/')
 def index():
+    return articles_page(1)
+
+
+@app.route('/articles/<int:page>')
+def articles_page(page):
+    limit = app.config['PAGINATION_LIMIT']
     articles = get_articles(app.config['POST_DIR'])
-    return render_template('index.html', posts=articles)
+    selection = articles[(page-1)*limit:page*limit]
+    pages = get_pages(len(articles), limit)
+    return render_template('index.html', posts=selection, page=page, pages=pages)
 
 
 @app.route('/feed')

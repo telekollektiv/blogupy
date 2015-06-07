@@ -22,6 +22,8 @@ POST_DIR = 'posts'
 DRAFT_DIR = 'drafts'
 EVENT_DIR = 'events'
 
+PAGINATION_LIMIT = 5
+
 # Mail Subject an content (keep the %s)
 
 # Articles
