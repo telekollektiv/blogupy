@@ -4,6 +4,11 @@ var breakouts = [
     'feed'
 ];
 
+app.config(['$interpolateProvider', function($interpolateProvider) {
+    $interpolateProvider.startSymbol('');
+    $interpolateProvider.endSymbol('');
+}]);
+
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
     $routeProvider
