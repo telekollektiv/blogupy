@@ -5,7 +5,7 @@
 <article>
     <h1>
         <small class="pull-right">{{ event.meta.date }} - {{ event.meta.stop }}</small>
-        <a href="/termine/{{ event.path[7:] }}.html">{{ event.meta.title }}</a>
+        <a href="{{ event.path }}.html">{{ event.meta.title }}</a>
     </h1>
 
     <small>Veranstalter: {{ event.meta.author }}</small>

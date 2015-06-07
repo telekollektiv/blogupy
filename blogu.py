@@ -75,18 +75,19 @@ def get_articles(prefix=''):
     return articles
 
 
-@app.route('/')
-def index():
-    return articles_page(1)
-
-
-@app.route('/articles/<int:page>')
-def articles_page(page):
-    limit = app.config['PAGINATION_LIMIT']
-    articles = get_articles(app.config['POST_DIR'])
-    selection = articles[(page-1)*limit:page*limit]
-    pages = get_pages(len(articles), limit)
-    return render_template('index.html', posts=selection, page=page, pages=pages)
+@app.route('/', defaults={'section': 'articles', 'page': 1})
+@app.route('/<section>/', defaults={'page': 1})
+@app.route('/<section>/<int:page>')
+def index(section, page):
+    if section == 'articles':
+        limit = app.config['PAGINATION_LIMIT']
+        articles = get_articles(app.config['POST_DIR'])
+        selection = articles[(page-1)*limit:page*limit]
+        pages = get_pages(len(articles), limit)
+        return render_template('index.html', posts=selection, page=page, pages=pages)
+    elif section == 'events':
+        events = get_articles(app.config['EVENT_DIR'])
+        return render_template('events.html', events=events)
 
 
 @app.route('/feed')
@@ -109,12 +110,6 @@ def post(name):
     path = '{}/{}'.format(postdir, name)
     post = flatpages.get_or_404(path)
     return render_template('post.html', post=post)
-
-
-@app.route('/termine/')
-def events():
-    events = get_articles(app.config['EVENT_DIR'])
-    return render_template('events.html', events=events)
 
 
 @app.route('/contribute/', methods=['GET', 'POST'])
