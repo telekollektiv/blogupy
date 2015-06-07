@@ -4,7 +4,6 @@ import re
 
 
 def get_pages(total, limit):
-    print((total, limit))
     return range(1, int(math.ceil(float(total) / limit)) + 1)
 
 
