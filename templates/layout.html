@@ -1,4 +1,4 @@
-{% if not qs %}
+{% if not request.query_string %}
 <!DOCTYPE html>
 <html ng-app="app">
     <head>
@@ -43,7 +43,7 @@
 {% endif %}
                 {% block content %}
                 {% endblock %}
-{% if not qs %}
+{% if not request.query_string %}
             </main>
 
             <footer>

@@ -25,13 +25,6 @@ app.secret_key = 'development key'
 mail.init_app(app)
 
 
-rt = render_template
-
-
-def render_template(*args, **kwargs):
-    return rt(*args, qs=request.query_string, **kwargs)
-
-
 def notify(group, subject, body, template=None):
     try:
         recv = app.config[group]
