@@ -15,7 +15,7 @@ It features:
 
 ## How to install?
 
-Make sure you're using a proper operating system and the following installed is installed:
+Make sure you're using a proper operating system and the following is installed:
 
 * git
 * python
