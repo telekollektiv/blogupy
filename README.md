@@ -1,45 +1,52 @@
-Work in progress...
+# blogupy
 
-## About
-blogupy is a Python based Blog-System for the Basel (CH) based [ATOPIE](https://atopie.net) Art project.
+> Yo dawg, we need a static blog system for an art project
 
-It startet as a request for a simple static article publishing tool. Shortly after the first lines of code more and mor ideas where born and in the sense of the ATOPIE Project it began to mutate to a fully dynamic and open blog system.
+This system is in use as blog during the Basel (CH) based [ATOPIE](https://atopie.net) Art project. It's running as an open blog that welcomes anybody to submit their content without registration.
 
-## Why name it blogupy?
+It features:
 
-because occupy+blog=blogu.py!
-
-## What does it do?
-
-blogging for a better world of course :)
-
-### Features
+* File based database - exportable and versionable with git
+* (Limited) Markdown support
+* Announce your events
+* Open content submission
+* A moderation interface (you better http auth that, btw)
+* Full support for js disabled browsers
 
 ## How to install?
 
-1. clone it
-2. resolve the dependencies
+Make sure you're using a proper operating system and the following installed is installed:
 
-### Requirements
+* git
+* python
+* python-pip
+* python-virtualenv
+* bower
 
-you need bower installed
+Next:
 
-all reqirements are listet in the reqirements.txt file
-
-(it works in jessie without virtual env)
-
-### Power Up
-
-./blogu.py
+1. `git clone https://github.com/telekollektiv/blogupy.git`
+2. `cd blogupy/`
+3. `virtualenv .`
+4. `. bin/activate`
+5. `pip install -r requrements.txt`
+6. `bower install`
+7. `./blogu.py` # for development
+8. `pip install gunicorn`
+9. `./bin/gunicorn blogu:app` # for production
 
 ## Future plans
 
-to white label it
+None
 
-## Licence
+# Legal fineprint
+
+The name of this project, blogupy, is entirely fictional. Any resemblance to other projects or movements is purely coincidental.
+
+## License
 
 blogupy is free software in the terms of the GPLv3 licence.
 
-## Font licences
+## Font licenses
 
-some fonts in this project are under different licences. Take a look at these files: font_licence1.txt, font_licence2.txt (to be added soon)
+Some fonts in this project are under different licenses. Take a look at these files: font_licence1.txt, font_licence2.txt (to be added soon)
