@@ -18,18 +18,18 @@
 body {
     margin: 0;
     padding: 0;
-    color: #280211;
-    background-color: #9fa196;
+    color: #1C1D25;
+    background-color: #595959;
     font-family: 'Cella', sans-serif;
 }
 
 a, a:focus {
-    color: #280211;
+    color: #595959;
     text-decoration: none;
 }
 
 a:hover {
-    color: #c10800;
+    color: #077187;
     text-decoration: none;
 }
 
@@ -65,20 +65,20 @@ header h1 {
 }
 
 .first-red::first-letter {
-    color: #c10800;
+    color: #077187;
 }
 
 header a {
-    color: #280211;
+    color: #595959;
 }
 
 header a:hover {
-    color: #c10800;
+    color: #077187;
     text-decoration: none;
 }
 
 header a:focus {
-    color: #280211;
+    color: #595959;
     text-decoration: none;
 }
 
@@ -87,16 +87,16 @@ footer a {
 }
 
 nav {
-    background-color: #280211;
+    background-color: #1C1D25;
     font-size: 20px;
 }
 
 header nav {
-    border-top: 4px solid #c10800;
+    border-top: 4px solid #077187;
 }
 
 footer nav {
-    border-bottom: 4px solid #c10800;
+    border-bottom: 4px solid #077187;
 }
 
 nav ul {
@@ -108,7 +108,7 @@ nav a, nav a {
 }
 
 nav a:hover, nav a:focus {
-    color: #c10800;
+    color: #077187;
 }
 
 nav a:hover {
@@ -116,19 +116,19 @@ nav a:hover {
 }
 
 #loading-bar .bar{
-    background: #280211;
+    background: #595959;
 }
 
 #loading-bar .peg{
-    -moz-box-shadow: #280211 1px 0 6px 1px;
-    -ms-box-shadow: #280211 1px 0 6px 1px;
-    -webkit-box-shadow: #280211 1px 0 6px 1px;
-    box-shadow: #280211 1px 0 6px 1px;
+    -moz-box-shadow: #595959 1px 0 6px 1px;
+    -ms-box-shadow: #595959 1px 0 6px 1px;
+    -webkit-box-shadow: #595959 1px 0 6px 1px;
+    box-shadow: #595959 1px 0 6px 1px;
 }
 
 #loading-bar-spinner .spinner-icon{
-    border-top-color: #280211;
-    border-left-color: #280211;
+    border-top-color: #595959;
+    border-left-color: #595959;
 }
 
 article, .content {
@@ -154,17 +154,17 @@ article p {
 article a {
     font-family: 'Audiowide', sans-serif;
     letter-spacing: 5px;
-    color: #280211;
+    color: #595959;
     text-decoration: none;
 }
 
 article h1 a:focus {
-    color: #280211;
+    color: #595959;
     text-decoration: none;
 }
 
 article a:hover {
-    color: #c10800;
+    color: #077187;
     text-decoration: none;
 }
 
@@ -186,11 +186,11 @@ input {
 }
 
 form input#submit {
-    border:1px solid #280211;
+    border:1px solid #595959;
     padding: 10px;
     font-weight:bold;
     text-align: center;
-    color: #280211;
+    color: #595959;
     background-color: #efefef;
 }
 
