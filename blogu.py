@@ -74,12 +74,12 @@ def get_articles(prefix=''):
 def index(section, page):
     if section == 'articles':
         limit = app.config['PAGINATION_LIMIT']
-        articles = get_articles(app.config['POST_DIR'])
+        articles = get_articles(section)
         selection = articles[(page-1)*limit:page*limit]
         pages = get_pages(len(articles), limit)
         return render_template('index.html', posts=selection, page=page, pages=pages)
     elif section == 'events':
-        events = get_articles(app.config['EVENT_DIR'])
+        events = get_articles(section)
         return render_template('events.html', events=events)
 
 
