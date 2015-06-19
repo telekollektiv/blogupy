@@ -7,13 +7,13 @@
             <h2>{{ '/'.join(post.path.split('/')[:-1]) }}/ {{ post.meta.title }}</h2>
 
             <form action="/moderate/{{ file }}">
-                <input type="submit" value="Vorschau / editieren">
+                <input type="submit" value="preview / edit">
             </form>
             <form method="POST" action="/moderate/{{ file }}">
                 {% if post.path.startswith('drafts/') %}
-                    <input type="submit" name="unlock" value="freigeben">
+                    <input type="submit" name="unlock" value="publish">
                 {% endif %}
-                <input type="submit" name="delete" value="deaktivieren">
+                <input type="submit" name="delete" value="deactivate">
             </form>
         </div>
         {% if not loop.last %}

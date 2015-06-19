@@ -15,12 +15,12 @@
 
     <form method="POST" action="/moderate/{{ file }}">
         <textarea name="body" rows="15">{{ post.body }}</textarea>
-        <input type="submit" name="update" value="&#9398;ktualisieren">
+        <input type="submit" name="update" value="update">
 
         {% if post.path.startswith('drafts/') %}
-            <input type="submit" name="unlock" value="freigeben">
+            <input type="submit" name="unlock" value="publish">
         {% endif %}
-        <input type="submit" name="delete" value="deaktivieren">
+        <input type="submit" name="delete" value="deactivate">
     </form>
 </article>
 {% endblock %}
