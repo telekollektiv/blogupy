@@ -2,10 +2,10 @@
 {% block content %}
 <div class="content">
     {% if success %}
-        <h3>Danke,</h3>
-        <p>wir melden uns.</p>
+        <h3>Thank you!</h3>
+        <p>We will come back to you soon.</p>
     {% else %}
-        <h2>Nimm Kontakt auf!</h2>
+        <h2>Contact us!</h2>
 
         <form action="/kontakt/" method="post">
             {{ form.hidden_tag() }}
