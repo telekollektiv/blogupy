@@ -7,8 +7,8 @@
         <a href="{{ post.path }}.html">{{ post.meta.title }}</a>
     </h1>
 
-    <small class="pull-right">Vom: {{ post.meta.date }}</small>
-    <small>Von: {{ post.meta.author }}</small>
+    <small class="pull-right">Created: {{ post.meta.date }}</small>
+    <small>Author: {{ post.meta.author }}</small>
 
     {{ post.html|safe }}
 </article>
@@ -30,13 +30,7 @@
 </div>
 {% else %}
 <div class="content">
-    <p class="quote">
-        The masses are in reality<br>
-        their own leaders,<br>
-        dialectically creating<br>
-        their own development<br>
-        process.
-    </p>
+    <p>Your articles will appear here.</p>
 </div>
 {% endif %}
 {% endblock %}

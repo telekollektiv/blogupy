@@ -8,20 +8,14 @@
         <a href="{{ event.path }}.html">{{ event.meta.title }}</a>
     </h1>
 
-    <small>Veranstalter: {{ event.meta.author }}</small>
+    <small>organiser: {{ event.meta.author }}</small>
 
     {{ event.html|safe }}
 </article>
 {% endfor %}
 {% else %}
 <div class="content">
-    <p class="quote">
-        The masses are in reality<br>
-        their own leaders,<br>
-        dialectically creating<br>
-        their own development<br>
-        process.
-    </p>
+    <p>Your events will appear here.</p>
 </div>
 {% endif %}
 {% endblock %}
