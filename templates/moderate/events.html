@@ -1,7 +1,7 @@
 {% extends "generic_moderate.html" %}
 {% block moderate %}
     <small class="pull-right">{{ post.date }} - {{ post.stop }}</small>
-    <small>Von: {{ post.author }}</small>
+    <small>Creator: {{ post.author }}</small>
 
     {{ post.html|safe }}
 
@@ -32,6 +32,6 @@
         {{ form.description.label }}
         {{ form.description(rows=7, required='') }}
 
-        <input type="submit" name="update" value="&#9398;ktualisieren">
+        <input type="submit" name="update" value="update">
     </form>
 {% endblock %}

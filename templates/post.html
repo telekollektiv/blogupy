@@ -3,8 +3,8 @@
 <article>
     <h1>{{ post.title }}</h1>
 
-    <small class="pull-right">Vom: {{ post.date }}</small>
-    <small>Von: {{ post.author }}</small>
+    <small class="pull-right">Created: {{ post.date }}</small>
+    <small>Author: {{ post.author }}</small>
 
     {{ post.html|safe }}
 </article>
