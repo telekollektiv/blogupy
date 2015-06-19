@@ -1,14 +1,14 @@
 @font-face {
-  font-family: 'Cella';
+  font-family: 'OpenSans';
   font-style: normal;
-  src: local('Cella'), url(Cella.otf) format('opentype');
+  src: local('OpenSans'), url(OpenSans-Regular.ttf) format('truetype');
 }
 
 @font-face {
-  font-family: 'Old';
+  font-family: 'Audiowidewide';
   font-style: normal;
-  font-weight: 400;
-  src: local('Old'), url(Old.ttf) format('truetype');
+  font-weight: 300;
+  src: local('Audiowidewide'), url(Audiowidewide-Regular.ttf) format('truetype');
 }
 
 [ng-cloak] {
@@ -45,20 +45,20 @@ a:hover {
 }
 
 h1, h2, h3 {
-    font-family: 'Old', sans-serif;
+    font-family: 'Audiowide', sans-serif;
     text-transform: uppercase;
-    letter-spacing: 5px;
+    letter-spacing: 2px;
 }
 
 header, footer {
-    font-family: 'Old', sans-serif;
+    font-family: 'Audiowide', sans-serif;
     text-align: center;
     background-color: #dfe5e2;
     text-transform: uppercase;
 }
 
 header h1 {
-    font-size: 100px;
+    font-size: 70px;
     margin: 0;
     padding: 10px;
     letter-spacing: 5px;
@@ -152,7 +152,7 @@ article p {
 }
 
 article a {
-    font-family: 'Old', sans-serif;
+    font-family: 'Audiowide', sans-serif;
     letter-spacing: 5px;
     color: #280211;
     text-decoration: none;
