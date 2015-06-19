@@ -32,7 +32,7 @@ Next:
 5. `pip install -r requrements.txt`
 6. `bower install`
 7. `cp config.py.sample config.py`
-8. `edit the config.py`
+8. `editor config.py`
 9. `./blogu.py` # for development
 10. `pip install gunicorn`
 11. `./bin/gunicorn blogu:app` # for production
