@@ -88,7 +88,7 @@ footer a {
 
 nav {
     background-color: #1C1D25;
-    font-size: 20px;
+    font-size: 15px;
 }
 
 header nav {
@@ -144,7 +144,7 @@ article, .content {
 article h2 {
     font-family: 'Cella', sans-serif;
     letter-spacing: -1px;
-    font-size: 20px;
+    font-size: 10px;
 }
 
 article p {
