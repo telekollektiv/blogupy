@@ -6,10 +6,10 @@
         <div class="row">
             <h2>{{ '/'.join(post.path.split('/')[:-1]) }}/ {{ post.meta.title }}</h2>
 
-            <form action="/moderate/{{ file }}">
+            <form action="/moderate/{{ post.path }}">
                 <input type="submit" value="preview / edit">
             </form>
-            <form method="POST" action="/moderate/{{ file }}">
+            <form method="POST" action="/moderate/{{ post.path }}">
                 {% if post.path.startswith('drafts/') %}
                     <input type="submit" name="unlock" value="publish">
                 {% endif %}

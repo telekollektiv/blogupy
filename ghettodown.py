@@ -16,7 +16,7 @@ def ghettodown(txt):
         for line in escape(txt).split('\n'):
             line = line.rstrip('\r')
             if line:
-                if line[0:2] == '# ':
+                if line[0] == '#':
                     if p:
                         yield '</p>'
                         p = False

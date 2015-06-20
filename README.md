@@ -31,9 +31,11 @@ Next:
 4. `. bin/activate`
 5. `pip install -r requrements.txt`
 6. `bower install`
-7. `./blogu.py` # for development
-8. `pip install gunicorn`
-9. `./bin/gunicorn blogu:app` # for production
+7. `cp config.py.sample config.py`
+8. `editor config.py`
+9. `./blogu.py` # for development
+10. `pip install gunicorn`
+11. `./bin/gunicorn blogu:app` # for production
 
 ## Future plans
 

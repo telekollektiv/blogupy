@@ -13,7 +13,7 @@
 
     {{ post.html|safe }}
 
-    <form method="POST" action="/moderate/{{ file }}">
+    <form method="POST" action="/moderate/{{ post.path }}">
         <textarea name="body" rows="15">{{ post.body }}</textarea>
         <input type="submit" name="update" value="update">
 

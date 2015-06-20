@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Contact form
 MAIL_SERVER = "your.mail.server"
 MAIL_PORT = 587
@@ -51,4 +52,4 @@ Bitte logge dich auf %s ein um zu moderieren.'''
 TEXT_SUBJECT_RELAESE_GENERIC = 'Bedarf freigegeben: %s'
 TEXT_BODY_RELEASE_GENERIC = '''Der Bedarf [] wurde freigegeben.'''
 TEXT_SUBJECT_DELETE_GENERIC = 'Bedarf gelöscht: %s'
-TEXT_BODY_DELETE_GENERIC = '''Der Bedarf [] wurde gelöscht.
+TEXT_BODY_DELETE_GENERIC = '''Der Bedarf [] wurde gelöscht.'''
