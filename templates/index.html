@@ -10,7 +10,13 @@
     <small class="pull-right">Vom: {{ post.meta.date }}</small>
     <small>Von: {{ post.meta.author }}</small>
 
-    {{ post.html|safe }}
+    <div class="summary">
+        {{ post.html|safe }}
+
+        <p class="fad0r"></p>
+    </div>
+
+    <p class="readmore text-right"><a href="{{ post.path }}.html">Read article...</a></p>
 </article>
 {% endfor %}
 <div class="content text-center">
