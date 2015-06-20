@@ -11,7 +11,7 @@
     {% block moderate %}
     {% endblock %}
 
-    <form method="POST" action="/moderate/{{ file }}">
+    <form method="POST" action="/moderate/{{ post.path }}">
         {% if post.path.startswith('drafts/') %}
             <input type="submit" name="unlock" value="freigeben">
         {% endif %}

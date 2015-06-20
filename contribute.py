@@ -1,4 +1,5 @@
 from utils import write_article
+from datetime import datetime
 
 def receive_article(form):
     post = {}
