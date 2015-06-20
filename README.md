@@ -29,7 +29,7 @@ Next:
 2. `cd blogupy/`
 3. `virtualenv .`
 4. `. bin/activate`
-5. `pip install -r requrements.txt`
+5. `pip install -r requirements.txt`
 6. `bower install`
 7. `cp config.py.sample config.py`
 8. `editor config.py`
